@@ -160,7 +160,7 @@ document.getElementById("form-regjistrim").addEventListener("submit", async func
   }
 
   try {
-    const res  = await fetch("http://localhost:8000/regjistrohu", {
+    const res  = await fetch("/regjistrohu", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ emri, fjalkalimi: fjalk })
