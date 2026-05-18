@@ -152,9 +152,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
 
     def log_message(self, fmt, *args):
-        path = args[0] if args else ""
-        if any(x in path for x in ["/login", "/regjistrohu", "/run-snake"]):
-            print(f"  [{args[1]}] {path}")
+        pass
 
 
 if __name__ == "__main__":
