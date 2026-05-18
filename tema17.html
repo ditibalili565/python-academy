@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="sq">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tema 17 - Enkapsulimi</title>
+    <link rel="stylesheet" href="tema1.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <img
+          class="logo"
+          src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg"
+          alt="Python Logo"
+        />
+        <h1>Tema 17: Enkapsulimi</h1>
+      </div>
+
+      <p>
+        Fshehja e informacionit nenkupton perdorimin e metodave pa u interesuar
+        se cfare permbajtje kane ato. Ka te beje gjithashtu me moslejimin e
+        perdorimit te ndryshoreve apo metodave nga jashte klases. Mund ti bejne
+        deri diku ndryshoret apo metodat e nje klase private. Enkapsulimi lejon
+        programuesit te fshehin detajet e brendshme te nje klase, dhe te
+        aksesojne vetem ato qe jane te nevojshme per perdoruesit e jashtem. Kjo
+        e ben kodin me te organizuar. Fshehja e informacionit ka te bej me
+        mos-aksesimin e metodave te nje klase nga jashte klases.
+      </p>
+
+      <p>
+        Shembull:
+      </p>
+
+      <div class="code">
+        class Personi: <br>
+     &nbsp;&nbsp;&nbsp;&nbsp;def __init__(self, emri, mosha): <br>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.emri = emri <br>
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.__mosha = mosha   # atribut privat <br><br>
+
+    &nbsp;&nbsp;&nbsp;&nbsp;def shfaq_moshen(self): <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print("Mosha eshte:", self.__mosha) <br><br>
+
+
+p1 = Personi("Andi", 16) <br><br>
+
+print(p1.emri) <br>
+p1.shfaq_moshen()
+      </div>
+      <p>Ne Python, kur vendosim __ para emrit te atributit ose metodes, ai behet privat dhe nuk mund te perdoret direkt jashte klases. Per shembull self.__mosha eshte atribut privat dhe aksesohet vetem permes metodave te klases si shfaq_moshen().</p>
+
+      <div class="navigation">
+        <a href="home.html" class="nav-btn">Faqja Kryesore</a>
+        <a href="tema16.html" class="nav-btn">Pas</a>
+        <a href="tema18.html" class="nav-btn">Para</a>
+      </div>
+    </div>
+  </body>
+</html>
