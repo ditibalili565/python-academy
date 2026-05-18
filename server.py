@@ -168,3 +168,13 @@ if __name__ == "__main__":
     print()
     with http.server.HTTPServer(("", PORT), Handler) as httpd:
         httpd.serve_forever()
+
+
+def do_GET(self):
+    if self.path == "/" or self.path == "":
+        self.send_response(302)
+        self.send_header("Location", "/registry.html")
+        self._cors()
+        self.end_headers()
+    else:
+        super().do_GET()
