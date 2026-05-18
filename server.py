@@ -153,11 +153,10 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
     def log_message(self, fmt, *args):
         pass
-
     def do_GET(self):
-        if self.path == "/" or self.path == "":
+        if self.path == "/":
             self.send_response(302)
-            self.send_header("Location", "/registry.html")
+            self.send_header("Location", "/index.html")
             self._cors()
             self.end_headers()
         else:
