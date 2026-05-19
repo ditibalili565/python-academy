@@ -1,476 +1,908 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="sq">
-<head>
-  <meta charset="UTF-8">
-  <title>Super Quiz - Python Academy</title>
-  <link rel="stylesheet" href="tema1.css">
-  <style>
-    .quiz-wrap { max-width:760px; margin:0 auto; }
+  <head>
+    <meta charset="UTF-8" />
+    <title>Super Quiz - Python Academy</title>
+    <link rel="stylesheet" href="tema1.css" />
+    <style>
+      .quiz-wrap {
+        max-width: 760px;
+        margin: 0 auto;
+      }
 
-    .hud {
-      display:flex; justify-content:space-between; align-items:center;
-      background:#0a0f1e; border:1px solid #1e3a5f; border-radius:10px;
-      padding:14px 24px; margin-bottom:22px;
-    }
-    .hud-bl { text-align:center; }
-    .hud-lbl { font-size:11px; color:#475569; font-family:'Courier New',monospace; margin-bottom:3px; }
-    .hud-val { font-size:26px; font-weight:bold; font-family:'Courier New',monospace; color:#f1f5f9; }
-    #kron { color:#38bdf8; }
-    #kron.urgent { color:#ef4444; animation:pulse 0.5s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+      .hud {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #0a0f1e;
+        border: 1px solid #1e3a5f;
+        border-radius: 10px;
+        padding: 14px 24px;
+        margin-bottom: 22px;
+      }
+      .hud-bl {
+        text-align: center;
+      }
+      .hud-lbl {
+        font-size: 11px;
+        color: #475569;
+        font-family: "Courier New", monospace;
+        margin-bottom: 3px;
+      }
+      .hud-val {
+        font-size: 26px;
+        font-weight: bold;
+        font-family: "Courier New", monospace;
+        color: #f1f5f9;
+      }
+      #kron {
+        color: #38bdf8;
+      }
+      #kron.urgent {
+        color: #ef4444;
+        animation: pulse 0.5s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
 
-    .progres-shirit {
-      width:100%; height:5px; background:#1e293b;
-      border-radius:5px; margin-bottom:22px; overflow:hidden;
-    }
-    .progres-brendshëm {
-      height:100%; background:linear-gradient(90deg,#38bdf8,#818cf8);
-      border-radius:5px; transition:width 0.4s;
-    }
+      .progres-shirit {
+        width: 100%;
+        height: 5px;
+        background: #1e293b;
+        border-radius: 5px;
+        margin-bottom: 22px;
+        overflow: hidden;
+      }
+      .progres-brendshëm {
+        height: 100%;
+        background: linear-gradient(90deg, #38bdf8, #818cf8);
+        border-radius: 5px;
+        transition: width 0.4s;
+      }
 
-    .kuti-pyetjes {
-      background:#0a0f1e; border:1px solid #1e3a5f;
-      border-radius:12px; padding:26px 28px; margin-bottom:20px;
-    }
-    .badge-tema {
-      display:inline-block; background:#1e3a5f; color:#38bdf8;
-      font-size:12px; padding:3px 12px; border-radius:20px;
-      font-family:'Courier New',monospace; margin-bottom:14px;
-    }
-    .txt-pyetjes {
-      font-size:19px; color:#f1f5f9;
-      font-family:'Courier New',monospace; line-height:1.6;
-    }
-    .kod-pyetjes {
-      background:#060a14; border-left:3px solid #38bdf8;
-      border-radius:5px; padding:12px 16px;
-      font-family:'Courier New',monospace; font-size:15px;
-      color:#38bdf8; white-space:pre; margin-top:12px; display:none;
-    }
+      .kuti-pyetjes {
+        background: #0a0f1e;
+        border: 1px solid #1e3a5f;
+        border-radius: 12px;
+        padding: 26px 28px;
+        margin-bottom: 20px;
+      }
+      .badge-tema {
+        display: inline-block;
+        background: #1e3a5f;
+        color: #38bdf8;
+        font-size: 12px;
+        padding: 3px 12px;
+        border-radius: 20px;
+        font-family: "Courier New", monospace;
+        margin-bottom: 14px;
+      }
+      .txt-pyetjes {
+        font-size: 19px;
+        color: #f1f5f9;
+        font-family: "Courier New", monospace;
+        line-height: 1.6;
+      }
+      .kod-pyetjes {
+        background: #060a14;
+        border-left: 3px solid #38bdf8;
+        border-radius: 5px;
+        padding: 12px 16px;
+        font-family: "Courier New", monospace;
+        font-size: 15px;
+        color: #38bdf8;
+        white-space: pre;
+        margin-top: 12px;
+        display: none;
+      }
 
-    .grid-opsionesh {
-      display:grid; grid-template-columns:1fr 1fr;
-      gap:12px; margin-bottom:18px;
-    }
-    .ops {
-      background:#111827; border:2px solid #1e3a5f;
-      border-radius:9px; padding:14px 18px;
-      font-family:'Courier New',monospace; font-size:15px;
-      color:#cbd5e1; cursor:pointer; text-align:left;
-      display:flex; align-items:center; gap:10px;
-      transition:all 0.18s;
-    }
-    .ops:hover:not(:disabled) { background:#1e293b; border-color:#38bdf8; color:#f1f5f9; }
-    .ops.sakte  { background:#064e3b; border-color:#10b981; color:#6ee7b7; }
-    .ops.gabim  { background:#450a0a; border-color:#ef4444; color:#fca5a5; }
-    .ops:disabled { cursor:default; }
-    .ops-shkr {
-      width:26px; height:26px; background:#1e3a5f; border-radius:5px;
-      display:flex; align-items:center; justify-content:center;
-      font-size:12px; font-weight:bold; color:#38bdf8; flex-shrink:0;
-    }
+      .grid-opsionesh {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+      .ops {
+        background: #111827;
+        border: 2px solid #1e3a5f;
+        border-radius: 9px;
+        padding: 14px 18px;
+        font-family: "Courier New", monospace;
+        font-size: 15px;
+        color: #cbd5e1;
+        cursor: pointer;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.18s;
+      }
+      .ops:hover:not(:disabled) {
+        background: #1e293b;
+        border-color: #38bdf8;
+        color: #f1f5f9;
+      }
+      .ops.sakte {
+        background: #064e3b;
+        border-color: #10b981;
+        color: #6ee7b7;
+      }
+      .ops.gabim {
+        background: #450a0a;
+        border-color: #ef4444;
+        color: #fca5a5;
+      }
+      .ops:disabled {
+        cursor: default;
+      }
+      .ops-shkr {
+        width: 26px;
+        height: 26px;
+        background: #1e3a5f;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: bold;
+        color: #38bdf8;
+        flex-shrink: 0;
+      }
 
-    .feedback {
-      text-align:center; font-family:'Courier New',monospace;
-      font-size:16px; min-height:26px; margin-bottom:16px;
-    }
+      .feedback {
+        text-align: center;
+        font-family: "Courier New", monospace;
+        font-size: 16px;
+        min-height: 26px;
+        margin-bottom: 16px;
+      }
 
-    /* Rezultati */
-    .ekrani-rez { display:none; text-align:center; padding:30px 0; }
-    .ikona-rez  { font-size:76px; margin-bottom:16px; }
-    .titulli-rez {
-      font-size:28px; font-family:'Courier New',monospace;
-      color:#f1f5f9; margin-bottom:8px;
-    }
-    .stat-box {
-      background:#0a0f1e; border:1px solid #1e3a5f;
-      border-radius:10px; padding:20px 28px;
-      display:inline-block; min-width:320px; margin:20px 0;
-    }
-    .stat-rr {
-      display:flex; justify-content:space-between;
-      font-family:'Courier New',monospace; font-size:15px;
-      color:#94a3b8; padding:7px 0;
-      border-bottom:1px solid #1e293b;
-    }
-    .stat-rr:last-child { border-bottom:none; }
-    .stat-v { color:#38bdf8; font-weight:bold; }
+      /* Rezultati */
+      .ekrani-rez {
+        display: none;
+        text-align: center;
+        padding: 30px 0;
+      }
+      .ikona-rez {
+        font-size: 76px;
+        margin-bottom: 16px;
+      }
+      .titulli-rez {
+        font-size: 28px;
+        font-family: "Courier New", monospace;
+        color: #f1f5f9;
+        margin-bottom: 8px;
+      }
+      .stat-box {
+        background: #0a0f1e;
+        border: 1px solid #1e3a5f;
+        border-radius: 10px;
+        padding: 20px 28px;
+        display: inline-block;
+        min-width: 320px;
+        margin: 20px 0;
+      }
+      .stat-rr {
+        display: flex;
+        justify-content: space-between;
+        font-family: "Courier New", monospace;
+        font-size: 15px;
+        color: #94a3b8;
+        padding: 7px 0;
+        border-bottom: 1px solid #1e293b;
+      }
+      .stat-rr:last-child {
+        border-bottom: none;
+      }
+      .stat-v {
+        color: #38bdf8;
+        font-weight: bold;
+      }
 
-    /* Historiku */
-    .tbl-historiku {
-      width:100%; border-collapse:collapse;
-      font-family:'Courier New',monospace; font-size:13px; margin-top:12px;
-    }
-    .tbl-historiku th {
-      color:#38bdf8; padding:7px 10px;
-      text-align:left; border-bottom:1px solid #1e3a5f;
-    }
-    .tbl-historiku td {
-      color:#94a3b8; padding:7px 10px; border-bottom:1px solid #0f172a;
-    }
-  </style>
-</head>
-<body>
-<div class="container">
-  <div class="header">
-    <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="">
-    <h1>Super Quiz</h1>
-  </div>
-
-  <div class="quiz-wrap">
-
-    <!-- HUD -->
-    <div class="hud" id="hud" style="display:none;">
-      <div class="hud-bl">
-        <div class="hud-lbl">PYETJA</div>
-        <div class="hud-val"><span id="nr-p">1</span>/20</div>
-      </div>
-      <div class="hud-bl">
-        <div class="hud-lbl">PIKE</div>
-        <div class="hud-val" id="pike-v">0</div>
-      </div>
-      <div class="hud-bl">
-        <div class="hud-lbl">KOHA</div>
-        <div class="hud-val" id="kron">20</div>
-      </div>
-      <div class="hud-bl">
-        <div class="hud-lbl">SERIA</div>
-        <div class="hud-val" id="seria-v">—</div>
+      /* Historiku */
+      .tbl-historiku {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: "Courier New", monospace;
+        font-size: 13px;
+        margin-top: 12px;
+      }
+      .tbl-historiku th {
+        color: #38bdf8;
+        padding: 7px 10px;
+        text-align: left;
+        border-bottom: 1px solid #1e3a5f;
+      }
+      .tbl-historiku td {
+        color: #94a3b8;
+        padding: 7px 10px;
+        border-bottom: 1px solid #0f172a;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="topbar">
+      <div class="topbar-logo">Python Academy</div>
+      <div class="menu">
+        <a href="home.html">Kreu</a>
+        <a href="home.html#temat">Temat</a>
+        <a href="quiz.html">Quiz</a>
+        <a href="snake.html">Loja</a>
+        <a href="rreth-nesh.html">Rreth Nesh</a>
       </div>
     </div>
-
-    <!-- Shiriti i progresit -->
-    <div class="progres-shirit" id="prog-sh" style="display:none;">
-      <div class="progres-brendshëm" id="prog-br" style="width:0%"></div>
-    </div>
-
-    <!-- Ekrani fillestar -->
-    <div id="ekr-fillim">
-      <p>
-        <strong>20 pyetje</strong> me zgjedhje të shumëfishta — <strong>20 sekonda</strong> për çdo pyetje.
-        Piket rriten me shpejtësi dhe me serie!
-      </p>
-
-      <div class="code" style="margin-bottom:20px;">
-        # Sistemi i pikëve:
-        # ✅ Përgjigje e saktë      → +100 pike
-        # ⚡ Brenda 5 sekondave    → +50 pike bonus
-        # 🔥 Serie 3+ sakte        → +30 pike bonus
-        # ❌ Gabim ose koha kalon  →  +0 pike
+    <div class="container">
+      <div class="header">
+        <img
+          class="logo"
+          src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg"
+          alt=""
+        />
+        <h1>Super Quiz</h1>
       </div>
 
-      <div style="text-align:center; margin-bottom:24px;">
-        <a href="#" class="btn" onclick="fillo(); return false;">▶ Fillo Quiz-in</a>
-      </div>
+      <div class="quiz-wrap">
+        <!-- HUD -->
+        <div class="hud" id="hud" style="display: none">
+          <div class="hud-bl">
+            <div class="hud-lbl">PYETJA</div>
+            <div class="hud-val"><span id="nr-p">1</span>/20</div>
+          </div>
+          <div class="hud-bl">
+            <div class="hud-lbl">PIKE</div>
+            <div class="hud-val" id="pike-v">0</div>
+          </div>
+          <div class="hud-bl">
+            <div class="hud-lbl">KOHA</div>
+            <div class="hud-val" id="kron">20</div>
+          </div>
+          <div class="hud-bl">
+            <div class="hud-lbl">SERIA</div>
+            <div class="hud-val" id="seria-v">—</div>
+          </div>
+        </div>
 
-      <div id="hist-zone" style="display:none;">
-        <h2 style="margin-bottom:10px;">📊 Historiku juaj i fundit</h2>
-        <div class="code" style="padding:0; overflow:hidden;">
-          <table class="tbl-historiku">
-            <thead><tr><th>Data</th><th>Pike</th><th>Saktësi</th><th>Koha</th></tr></thead>
-            <tbody id="hist-tbody"></tbody>
-          </table>
+        <!-- Shiriti i progresit -->
+        <div class="progres-shirit" id="prog-sh" style="display: none">
+          <div class="progres-brendshëm" id="prog-br" style="width: 0%"></div>
+        </div>
+
+        <!-- Ekrani fillestar -->
+        <div id="ekr-fillim">
+          <p>
+            <strong>20 pyetje</strong> me zgjedhje të shumëfishta —
+            <strong>20 sekonda</strong> për çdo pyetje. Piket rriten me
+            shpejtësi dhe me serie!
+          </p>
+
+          <div class="code" style="margin-bottom: 20px">
+            # Sistemi i pikëve: # ✅ Përgjigje e saktë → +100 pike # ⚡ Brenda 5
+            sekondave → +50 pike bonus # 🔥 Serie 3+ sakte → +30 pike bonus # ❌
+            Gabim ose koha kalon → +0 pike
+          </div>
+
+          <div style="text-align: center; margin-bottom: 24px">
+            <a
+              href="#"
+              class="btn"
+              onclick="
+                fillo();
+                return false;
+              "
+              >▶ Fillo Quiz-in</a
+            >
+          </div>
+
+          <div id="hist-zone" style="display: none">
+            <h2 style="margin-bottom: 10px">📊 Historiku juaj i fundit</h2>
+            <div class="code" style="padding: 0; overflow: hidden">
+              <table class="tbl-historiku">
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>Pike</th>
+                    <th>Saktësi</th>
+                    <th>Koha</th>
+                  </tr>
+                </thead>
+                <tbody id="hist-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Zona e quizit -->
+        <div id="zona-quiz" style="display: none">
+          <div class="kuti-pyetjes">
+            <div class="badge-tema" id="badge-tema">📦 Tema</div>
+            <div class="txt-pyetjes" id="txt-p"></div>
+            <div class="kod-pyetjes" id="kod-p"></div>
+          </div>
+          <div class="grid-opsionesh" id="grid-ops"></div>
+          <div class="feedback" id="feedback"></div>
+        </div>
+
+        <!-- Rezultati -->
+        <div class="ekrani-rez" id="ekr-rez">
+          <div class="ikona-rez" id="ikona-r"></div>
+          <div class="titulli-rez" id="titull-r"></div>
+          <div class="stat-box">
+            <div class="stat-rr">
+              <span>Pike totale</span> <span class="stat-v" id="r-pike"></span>
+            </div>
+            <div class="stat-rr">
+              <span>Përgjigje sakta</span
+              ><span class="stat-v" id="r-sakta"></span>
+            </div>
+            <div class="stat-rr">
+              <span>Seria maksimale</span
+              ><span class="stat-v" id="r-seria"></span>
+            </div>
+            <div class="stat-rr">
+              <span>Koha mesatare</span>
+              <span class="stat-v" id="r-koha"></span>
+            </div>
+          </div>
+          <div>
+            <a
+              href="#"
+              class="btn"
+              onclick="
+                fillo();
+                return false;
+              "
+              >🔄 Provo Sërish</a
+            >
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Zona e quizit -->
-    <div id="zona-quiz" style="display:none;">
-      <div class="kuti-pyetjes">
-        <div class="badge-tema" id="badge-tema">📦 Tema</div>
-        <div class="txt-pyetjes" id="txt-p"></div>
-        <div class="kod-pyetjes" id="kod-p"></div>
+      <div class="navigation" style="margin-top: 40px">
+        <a href="home.html" class="nav-btn">Faqja Kryesore</a>
       </div>
-      <div class="grid-opsionesh" id="grid-ops"></div>
-      <div class="feedback" id="feedback"></div>
     </div>
 
-    <!-- Rezultati -->
-    <div class="ekrani-rez" id="ekr-rez">
-      <div class="ikona-rez" id="ikona-r"></div>
-      <div class="titulli-rez" id="titull-r"></div>
-      <div class="stat-box">
-        <div class="stat-rr"><span>Pike totale</span>    <span class="stat-v" id="r-pike"></span></div>
-        <div class="stat-rr"><span>Përgjigje sakta</span><span class="stat-v" id="r-sakta"></span></div>
-        <div class="stat-rr"><span>Seria maksimale</span><span class="stat-v" id="r-seria"></span></div>
-        <div class="stat-rr"><span>Koha mesatare</span>  <span class="stat-v" id="r-koha"></span></div>
-      </div>
-      <div><a href="#" class="btn" onclick="fillo(); return false;">🔄 Provo Sërish</a></div>
-    </div>
+    <script>
+      // ═══════════════════════════════════════════════════════
+      //  BANKA E PYETJEVE
+      // ═══════════════════════════════════════════════════════
+      const BANKA = [
+        {
+          t: "🖨️ Print",
+          p: 'Çfarë shfaq: print("Python", 2025)',
+          kodi: true,
+          o: ["Python 2025", "Python2025", "Error", "python 2025"],
+          s: 0,
+        },
+        {
+          t: "🖨️ Print",
+          p: "Si printojmë pa rresht të ri?",
+          o: [
+            'print("x",end="")',
+            'print("x",stop="")',
+            'print("x",\\n=0)',
+            'echo("x")',
+          ],
+          s: 0,
+        },
+        {
+          t: "🖨️ Print",
+          p: "Cila merr të dhëna nga perdoruesi?",
+          o: ["input()", "scan()", "read()", "get()"],
+          s: 0,
+        },
+        {
+          t: "📦 Tipet",
+          p: "Tipi i vlerës 3.14 ?",
+          o: ["float", "int", "str", "double"],
+          s: 0,
+        },
+        {
+          t: "📦 Tipet",
+          p: 'Çfarë kthen type("123") ?',
+          o: ["<class 'str'>", "<class 'int'>", "<class 'float'>", "Error"],
+          s: 0,
+        },
+        {
+          t: "📦 Tipet",
+          p: "Si kthejmë '42' në numër të plotë?",
+          o: ["int('42')", "str(42)", "float('42')", "num('42')"],
+          s: 0,
+        },
+        {
+          t: "📦 Tipet",
+          p: "Tipi i True/False në Python?",
+          o: ["bool", "int", "str", "logic"],
+          s: 0,
+        },
+        {
+          t: "➕ Operatorët",
+          p: "Çfarë bën operatori ** ?",
+          o: ["Fuqizim", "Pjesëtim", "Mbetja", "Shumëzim"],
+          s: 0,
+        },
+        {
+          t: "➕ Operatorët",
+          p: "Vlera e 17 % 5 ?",
+          o: ["2", "3", "1", "4"],
+          s: 0,
+        },
+        {
+          t: "➕ Operatorët",
+          p: "Operatori për barazim?",
+          o: ["==", "=", "!=", ">="],
+          s: 0,
+        },
+        {
+          t: "➕ Operatorët",
+          p: "Operatori // bën:",
+          o: ["Pjesëtim të plotë", "Pjesëtim normal", "Fuqizim", "Koment"],
+          s: 0,
+        },
+        {
+          t: "➕ Operatorët",
+          p: "Vlera e 2 ** 8 ?",
+          o: ["256", "16", "128", "64"],
+          s: 0,
+        },
+        {
+          t: "❓ Kushtet",
+          p: "Fjalë kyçe për kusht të dytë?",
+          o: ["elif", "else if", "elseif", "another"],
+          s: 0,
+        },
+        {
+          t: "❓ Kushtet",
+          p: 'x=5. Çfarë printon?\nif x>3:\n  print("A")\nelse:\n  print("B")',
+          kodi: true,
+          o: ["A", "B", "AB", "Error"],
+          s: 0,
+        },
+        {
+          t: "❓ Kushtet",
+          p: "Sintaksë e saktë?",
+          o: ["if x == 5:", "if (x = 5):", "IF x == 5:", "if x = 5"],
+          s: 0,
+        },
+        {
+          t: "🔁 Ciklet",
+          p: "Sa herë ekzekutohet:\nfor i in range(3):",
+          kodi: true,
+          o: ["3", "2", "4", "Infinit"],
+          s: 0,
+        },
+        {
+          t: "🔁 Ciklet",
+          p: "Çfarë bën 'break' ?",
+          o: [
+            "Ndërpret ciklin",
+            "Kalon iterimin",
+            "Rifillon ciklin",
+            "Nuk bën gjë",
+          ],
+          s: 0,
+        },
+        {
+          t: "🔁 Ciklet",
+          p: "Çfarë bën 'continue' ?",
+          o: [
+            "Kalon iterimin aktual",
+            "Ndërpret ciklin",
+            "Rinis programin",
+            "Shfaq mesazh",
+          ],
+          s: 0,
+        },
+        {
+          t: "🔁 Ciklet",
+          p: "range(2, 8, 2) gjeneron:",
+          o: ["2,4,6", "2,4,6,8", "1,3,5,7", "0,2,4,6"],
+          s: 0,
+        },
+        {
+          t: "🔁 Ciklet",
+          p: "While ekzekutohet kur kushti:",
+          o: ["True", "False", "0", "None"],
+          s: 0,
+        },
+        {
+          t: "⚙️ Funksionet",
+          p: "Fjalë kyçe për funksion?",
+          o: ["def", "func", "function", "create"],
+          s: 0,
+        },
+        {
+          t: "⚙️ Funksionet",
+          p: "Çfarë bën 'return' ?",
+          o: [
+            "Kthen vlerën",
+            "Printon",
+            "Ndërpret programin",
+            "Krijon variabël",
+          ],
+          s: 0,
+        },
+        {
+          t: "⚙️ Funksionet",
+          p: "def sh(a,b):\n  return a+b\nprint(sh(3,4))",
+          kodi: true,
+          o: ["7", "34", "Error", "None"],
+          s: 0,
+        },
+        {
+          t: "📐 Modulet",
+          p: "Si importojmë vetëm sqrt nga math?",
+          o: [
+            "from math import sqrt",
+            "import math.sqrt",
+            "include math",
+            "use math",
+          ],
+          s: 0,
+        },
+        {
+          t: "📐 Modulet",
+          p: "math.sqrt(144) = ?",
+          o: ["12.0", "12", "144.0", "Error"],
+          s: 0,
+        },
+        {
+          t: "📐 Modulet",
+          p: "Cili modul gjeneron numra rastësorë?",
+          o: ["random", "math", "os", "sys"],
+          s: 0,
+        },
+        {
+          t: "📁 Skedarët",
+          p: 'open("f.txt","w") e hap për:',
+          o: ["Shkrim", "Lexim", "Shtim", "Ekzekutim"],
+          s: 0,
+        },
+        {
+          t: "📁 Skedarët",
+          p: "Si lexojmë gjithë përmbajtjen?",
+          o: ["f.read()", "f.get()", "f.load()", "f.fetch()"],
+          s: 0,
+        },
+        {
+          t: "📁 Skedarët",
+          p: '"a" si mënyrë hapjeje do thotë:',
+          o: ["Shto në fund", "Shkruaj nga fillimi", "Lexo", "Fshi"],
+          s: 0,
+        },
+        {
+          t: "🏗️ OOP",
+          p: "Fjalë kyçe për klasë?",
+          o: ["class", "def", "object", "create"],
+          s: 0,
+        },
+        {
+          t: "🏗️ OOP",
+          p: "Çfarë është __init__ ?",
+          o: ["Konstruktori", "Destruktori", "Metodë statike", "Atribut"],
+          s: 0,
+        },
+        {
+          t: "🏗️ OOP",
+          p: "Çfarë përfaqëson 'self' ?",
+          o: ["Objekti aktual", "Klasa", "Metoda", "Atributi"],
+          s: 0,
+        },
+        {
+          t: "🏗️ OOP",
+          p: "Trashëgimia do thotë:",
+          o: [
+            "Klasa merr veti nga tjetra",
+            "Metoda kopjohet",
+            "Objekti fshihet",
+            "Atributi ndryshon",
+          ],
+          s: 0,
+        },
+        {
+          t: "🏗️ OOP",
+          p: "Polimorfizmi do thotë:",
+          o: [
+            "E njëjta metodë sillet ndryshe",
+            "Klasa krijohet dy herë",
+            "Atributi mbiscriohet",
+            "Konstruktori thirret dy herë",
+          ],
+          s: 0,
+        },
+        {
+          t: "🏗️ OOP",
+          p: "Atribut privat (konventa)?",
+          o: ["self._emri", "self.emri", "self__emri", "private self.emri"],
+          s: 0,
+        },
+        {
+          t: "📋 Listat",
+          p: 'len(["a","b","c","d"]) = ?',
+          o: ["4", "3", "5", "Error"],
+          s: 0,
+        },
+        {
+          t: "📋 Listat",
+          p: "Si shtojmë element në fund?",
+          o: ["list.append(x)", "list.add(x)", "list.push(x)", "list.set(x)"],
+          s: 0,
+        },
+        {
+          t: "📋 Listat",
+          p: "list.pop() heq:",
+          o: [
+            "Elementin e fundit",
+            "Elementin e parë",
+            "Nga mesi",
+            "Të gjithë",
+          ],
+          s: 0,
+        },
+        {
+          t: "📋 Listat",
+          p: "lista=[10,20,30]\nprint(lista[1])",
+          kodi: true,
+          o: ["20", "10", "30", "Error"],
+          s: 0,
+        },
+        {
+          t: "🔤 Stringjet",
+          p: '"Python".upper() kthen:',
+          o: ["PYTHON", "python", "Python", "Error"],
+          s: 0,
+        },
+        {
+          t: "🔤 Stringjet",
+          p: 'len("Python") = ?',
+          o: ["6", "5", "7", "Error"],
+          s: 0,
+        },
+        {
+          t: "🔤 Stringjet",
+          p: '"Python".replace("P","J") kthen:',
+          o: ["Jython", "Python", "JPython", "Error"],
+          s: 0,
+        },
+      ];
 
-  </div>
+      // ═══════════════════════════════════════════════════════
+      //  GJENDJA
+      // ═══════════════════════════════════════════════════════
+      let pyetjet = [],
+        idx = 0,
+        pike = 0,
+        saktat = 0,
+        seria = 0,
+        seriaMax = 0;
+      let kronoID,
+        kohaFill,
+        kohaTotal = 0;
 
-  <div class="navigation" style="margin-top:40px;">
-    <a href="home.html" class="nav-btn">Faqja Kryesore</a>
-  </div>
-</div>
+      async function fillo() {
+        // Kontrollo login
+        try {
+          const r = await fetch("http://localhost:8000/perdoruesi-aktual", {
+            credentials: "include",
+          });
+          const d = await r.json();
+          if (!d.ok) {
+            window.location.href = "login.html";
+            return;
+          }
+        } catch (e) {}
 
-<script>
-// ═══════════════════════════════════════════════════════
-//  BANKA E PYETJEVE
-// ═══════════════════════════════════════════════════════
-const BANKA = [
-  {t:"🖨️ Print",    p:'Çfarë shfaq: print("Python", 2025)', kodi:true,
-   o:["Python 2025","Python2025","Error","python 2025"], s:0},
-  {t:"🖨️ Print",    p:"Si printojmë pa rresht të ri?",
-   o:['print("x",end="")','print("x",stop="")','print("x",\\n=0)','echo("x")'], s:0},
-  {t:"🖨️ Print",    p:"Cila merr të dhëna nga perdoruesi?",
-   o:["input()","scan()","read()","get()"], s:0},
-  {t:"📦 Tipet",    p:"Tipi i vlerës 3.14 ?",
-   o:["float","int","str","double"], s:0},
-  {t:"📦 Tipet",    p:'Çfarë kthen type("123") ?',
-   o:["<class 'str'>","<class 'int'>","<class 'float'>","Error"], s:0},
-  {t:"📦 Tipet",    p:"Si kthejmë '42' në numër të plotë?",
-   o:["int('42')","str(42)","float('42')","num('42')"], s:0},
-  {t:"📦 Tipet",    p:"Tipi i True/False në Python?",
-   o:["bool","int","str","logic"], s:0},
-  {t:"➕ Operatorët",p:"Çfarë bën operatori ** ?",
-   o:["Fuqizim","Pjesëtim","Mbetja","Shumëzim"], s:0},
-  {t:"➕ Operatorët",p:"Vlera e 17 % 5 ?",
-   o:["2","3","1","4"], s:0},
-  {t:"➕ Operatorët",p:"Operatori për barazim?",
-   o:["==","=","!=",">="], s:0},
-  {t:"➕ Operatorët",p:"Operatori // bën:",
-   o:["Pjesëtim të plotë","Pjesëtim normal","Fuqizim","Koment"], s:0},
-  {t:"➕ Operatorët",p:"Vlera e 2 ** 8 ?",
-   o:["256","16","128","64"], s:0},
-  {t:"❓ Kushtet",  p:"Fjalë kyçe për kusht të dytë?",
-   o:["elif","else if","elseif","another"], s:0},
-  {t:"❓ Kushtet",  p:'x=5. Çfarë printon?\nif x>3:\n  print("A")\nelse:\n  print("B")', kodi:true,
-   o:["A","B","AB","Error"], s:0},
-  {t:"❓ Kushtet",  p:"Sintaksë e saktë?",
-   o:["if x == 5:","if (x = 5):","IF x == 5:","if x = 5"], s:0},
-  {t:"🔁 Ciklet",   p:"Sa herë ekzekutohet:\nfor i in range(3):", kodi:true,
-   o:["3","2","4","Infinit"], s:0},
-  {t:"🔁 Ciklet",   p:"Çfarë bën 'break' ?",
-   o:["Ndërpret ciklin","Kalon iterimin","Rifillon ciklin","Nuk bën gjë"], s:0},
-  {t:"🔁 Ciklet",   p:"Çfarë bën 'continue' ?",
-   o:["Kalon iterimin aktual","Ndërpret ciklin","Rinis programin","Shfaq mesazh"], s:0},
-  {t:"🔁 Ciklet",   p:"range(2, 8, 2) gjeneron:",
-   o:["2,4,6","2,4,6,8","1,3,5,7","0,2,4,6"], s:0},
-  {t:"🔁 Ciklet",   p:"While ekzekutohet kur kushti:",
-   o:["True","False","0","None"], s:0},
-  {t:"⚙️ Funksionet",p:"Fjalë kyçe për funksion?",
-   o:["def","func","function","create"], s:0},
-  {t:"⚙️ Funksionet",p:"Çfarë bën 'return' ?",
-   o:["Kthen vlerën","Printon","Ndërpret programin","Krijon variabël"], s:0},
-  {t:"⚙️ Funksionet",p:'def sh(a,b):\n  return a+b\nprint(sh(3,4))', kodi:true,
-   o:["7","34","Error","None"], s:0},
-  {t:"📐 Modulet",  p:"Si importojmë vetëm sqrt nga math?",
-   o:["from math import sqrt","import math.sqrt","include math","use math"], s:0},
-  {t:"📐 Modulet",  p:"math.sqrt(144) = ?",
-   o:["12.0","12","144.0","Error"], s:0},
-  {t:"📐 Modulet",  p:"Cili modul gjeneron numra rastësorë?",
-   o:["random","math","os","sys"], s:0},
-  {t:"📁 Skedarët", p:'open("f.txt","w") e hap për:',
-   o:["Shkrim","Lexim","Shtim","Ekzekutim"], s:0},
-  {t:"📁 Skedarët", p:"Si lexojmë gjithë përmbajtjen?",
-   o:["f.read()","f.get()","f.load()","f.fetch()"], s:0},
-  {t:"📁 Skedarët", p:'"a" si mënyrë hapjeje do thotë:',
-   o:["Shto në fund","Shkruaj nga fillimi","Lexo","Fshi"], s:0},
-  {t:"🏗️ OOP",      p:"Fjalë kyçe për klasë?",
-   o:["class","def","object","create"], s:0},
-  {t:"🏗️ OOP",      p:"Çfarë është __init__ ?",
-   o:["Konstruktori","Destruktori","Metodë statike","Atribut"], s:0},
-  {t:"🏗️ OOP",      p:"Çfarë përfaqëson 'self' ?",
-   o:["Objekti aktual","Klasa","Metoda","Atributi"], s:0},
-  {t:"🏗️ OOP",      p:"Trashëgimia do thotë:",
-   o:["Klasa merr veti nga tjetra","Metoda kopjohet","Objekti fshihet","Atributi ndryshon"], s:0},
-  {t:"🏗️ OOP",      p:"Polimorfizmi do thotë:",
-   o:["E njëjta metodë sillet ndryshe","Klasa krijohet dy herë","Atributi mbiscriohet","Konstruktori thirret dy herë"], s:0},
-  {t:"🏗️ OOP",      p:"Atribut privat (konventa)?",
-   o:["self._emri","self.emri","self__emri","private self.emri"], s:0},
-  {t:"📋 Listat",   p:'len(["a","b","c","d"]) = ?',
-   o:["4","3","5","Error"], s:0},
-  {t:"📋 Listat",   p:"Si shtojmë element në fund?",
-   o:["list.append(x)","list.add(x)","list.push(x)","list.set(x)"], s:0},
-  {t:"📋 Listat",   p:"list.pop() heq:",
-   o:["Elementin e fundit","Elementin e parë","Nga mesi","Të gjithë"], s:0},
-  {t:"📋 Listat",   p:'lista=[10,20,30]\nprint(lista[1])', kodi:true,
-   o:["20","10","30","Error"], s:0},
-  {t:"🔤 Stringjet",p:'"Python".upper() kthen:',
-   o:["PYTHON","python","Python","Error"], s:0},
-  {t:"🔤 Stringjet",p:'len("Python") = ?',
-   o:["6","5","7","Error"], s:0},
-  {t:"🔤 Stringjet",p:'"Python".replace("P","J") kthen:',
-   o:["Jython","Python","JPython","Error"], s:0},
-];
+        // 20 pyetje rastesore
+        pyetjet = [...BANKA].sort(() => Math.random() - 0.5).slice(0, 20);
+        idx = 0;
+        pike = 0;
+        saktat = 0;
+        seria = 0;
+        seriaMax = 0;
+        kohaTotal = 0;
 
-// ═══════════════════════════════════════════════════════
-//  GJENDJA
-// ═══════════════════════════════════════════════════════
-let pyetjet=[], idx=0, pike=0, saktat=0, seria=0, seriaMax=0;
-let kronoID, kohaFill, kohaTotal=0;
+        document.getElementById("ekr-fillim").style.display = "none";
+        document.getElementById("ekr-rez").style.display = "none";
+        document.getElementById("zona-quiz").style.display = "block";
+        document.getElementById("hud").style.display = "flex";
+        document.getElementById("prog-sh").style.display = "block";
 
-async function fillo() {
-  // Kontrollo login
-  try {
-    const r = await fetch("http://localhost:8000/perdoruesi-aktual",{credentials:"include"});
-    const d = await r.json();
-    if (!d.ok) { window.location.href="login.html"; return; }
-  } catch(e) {}
+        shfaqPyetjen();
+      }
 
-  // 20 pyetje rastesore
-  pyetjet = [...BANKA].sort(()=>Math.random()-0.5).slice(0,20);
-  idx=0; pike=0; saktat=0; seria=0; seriaMax=0; kohaTotal=0;
+      function shfaqPyetjen() {
+        if (idx >= pyetjet.length) {
+          fundiQuizit();
+          return;
+        }
+        const q = pyetjet[idx];
 
-  document.getElementById("ekr-fillim").style.display = "none";
-  document.getElementById("ekr-rez").style.display    = "none";
-  document.getElementById("zona-quiz").style.display  = "block";
-  document.getElementById("hud").style.display        = "flex";
-  document.getElementById("prog-sh").style.display    = "block";
+        document.getElementById("nr-p").textContent = idx + 1;
+        document.getElementById("pike-v").textContent = pike;
+        document.getElementById("seria-v").textContent =
+          seria > 0 ? seria + "🔥" : "—";
+        document.getElementById("prog-br").style.width =
+          (idx / pyetjet.length) * 100 + "%";
+        document.getElementById("badge-tema").textContent = q.t;
 
-  shfaqPyetjen();
-}
+        // Pyetja dhe kodi
+        const rreshtat = q.p.split("\n");
+        document.getElementById("txt-p").textContent = rreshtat[0];
+        const kodEl = document.getElementById("kod-p");
+        if (q.kodi && rreshtat.length > 1) {
+          kodEl.style.display = "block";
+          kodEl.textContent = rreshtat.slice(1).join("\n");
+        } else {
+          kodEl.style.display = "none";
+        }
 
-function shfaqPyetjen() {
-  if (idx >= pyetjet.length) { fundiQuizit(); return; }
-  const q = pyetjet[idx];
+        // Opsionet të perziera
+        const rend = [0, 1, 2, 3].sort(() => Math.random() - 0.5);
+        const grid = document.getElementById("grid-ops");
+        grid.innerHTML = "";
+        ["A", "B", "C", "D"].forEach((sh, i) => {
+          const origI = rend[i];
+          const btn = document.createElement("button");
+          btn.className = "ops";
+          btn.innerHTML = `<span class="ops-shkr">${sh}</span>${q.o[origI]}`;
+          btn.onclick = () => zgjidh(btn, origI === q.s);
+          grid.appendChild(btn);
+        });
 
-  document.getElementById("nr-p").textContent    = idx+1;
-  document.getElementById("pike-v").textContent  = pike;
-  document.getElementById("seria-v").textContent = seria>0 ? seria+"🔥" : "—";
-  document.getElementById("prog-br").style.width = (idx/pyetjet.length*100)+"%";
-  document.getElementById("badge-tema").textContent = q.t;
+        document.getElementById("feedback").textContent = "";
 
-  // Pyetja dhe kodi
-  const rreshtat = q.p.split("\n");
-  document.getElementById("txt-p").textContent = rreshtat[0];
-  const kodEl = document.getElementById("kod-p");
-  if (q.kodi && rreshtat.length > 1) {
-    kodEl.style.display = "block";
-    kodEl.textContent   = rreshtat.slice(1).join("\n");
-  } else {
-    kodEl.style.display = "none";
-  }
+        // Kronometri
+        clearInterval(kronoID);
+        let sek = 20;
+        kohaFill = Date.now();
+        const kEl = document.getElementById("kron");
+        kEl.textContent = sek;
+        kEl.classList.remove("urgent");
 
-  // Opsionet të perziera
-  const rend = [0,1,2,3].sort(()=>Math.random()-0.5);
-  const grid = document.getElementById("grid-ops");
-  grid.innerHTML = "";
-  ["A","B","C","D"].forEach((sh, i) => {
-    const origI = rend[i];
-    const btn   = document.createElement("button");
-    btn.className = "ops";
-    btn.innerHTML = `<span class="ops-shkr">${sh}</span>${q.o[origI]}`;
-    btn.onclick   = () => zgjidh(btn, origI === q.s);
-    grid.appendChild(btn);
-  });
+        kronoID = setInterval(() => {
+          sek--;
+          kEl.textContent = sek;
+          if (sek <= 5) kEl.classList.add("urgent");
+          if (sek <= 0) {
+            clearInterval(kronoID);
+            kohaKaloi();
+          }
+        }, 1000);
+      }
 
-  document.getElementById("feedback").textContent = "";
+      function zgjidh(btn, sakte) {
+        clearInterval(kronoID);
+        const sek = Math.round((Date.now() - kohaFill) / 1000);
+        kohaTotal += sek;
+        document.querySelectorAll(".ops").forEach((b) => (b.disabled = true));
+        const fb = document.getElementById("feedback");
 
-  // Kronometri
-  clearInterval(kronoID);
-  let sek = 20;
-  kohaFill = Date.now();
-  const kEl = document.getElementById("kron");
-  kEl.textContent = sek;
-  kEl.classList.remove("urgent");
+        if (sakte) {
+          btn.classList.add("sakte");
+          let p = 100;
+          if (sek <= 5) p += 50;
+          if (seria >= 2) p += 30;
+          pike += p;
+          saktat++;
+          seria++;
+          if (seria > seriaMax) seriaMax = seria;
+          fb.style.color = "#10b981";
+          fb.textContent =
+            sek <= 5
+              ? `⚡ Saktë! +${p} pike (shpejtësi + serie!)`
+              : `✅ Saktë! +${p} pike`;
+        } else {
+          btn.classList.add("gabim");
+          // Shfaq te saktën
+          const sakteOrig = pyetjet[idx].s;
+          document.querySelectorAll(".ops").forEach((b) => {
+            if (b.textContent.trim().slice(1) === pyetjet[idx].o[sakteOrig])
+              b.classList.add("sakte");
+          });
+          seria = 0;
+          fb.style.color = "#ef4444";
+          fb.textContent = "❌ Gabim!";
+        }
 
-  kronoID = setInterval(() => {
-    sek--;
-    kEl.textContent = sek;
-    if (sek <= 5) kEl.classList.add("urgent");
-    if (sek <= 0) { clearInterval(kronoID); kohaKaloi(); }
-  }, 1000);
-}
+        document.getElementById("pike-v").textContent = pike;
+        document.getElementById("seria-v").textContent =
+          seria > 0 ? seria + "🔥" : "—";
+        idx++;
+        setTimeout(shfaqPyetjen, 1500);
+      }
 
-function zgjidh(btn, sakte) {
-  clearInterval(kronoID);
-  const sek = Math.round((Date.now()-kohaFill)/1000);
-  kohaTotal += sek;
-  document.querySelectorAll(".ops").forEach(b => b.disabled=true);
-  const fb = document.getElementById("feedback");
+      function kohaKaloi() {
+        seria = 0;
+        kohaTotal += 20;
+        idx++;
+        const fb = document.getElementById("feedback");
+        fb.style.color = "#f59e0b";
+        fb.textContent = "⏰ Koha mbaroi!";
+        document.querySelectorAll(".ops").forEach((b) => (b.disabled = true));
+        setTimeout(shfaqPyetjen, 1300);
+      }
 
-  if (sakte) {
-    btn.classList.add("sakte");
-    let p = 100;
-    if (sek<=5)  p+=50;
-    if (seria>=2) p+=30;
-    pike+=p; saktat++; seria++;
-    if (seria>seriaMax) seriaMax=seria;
-    fb.style.color   = "#10b981";
-    fb.textContent   = sek<=5 ? `⚡ Saktë! +${p} pike (shpejtësi + serie!)` : `✅ Saktë! +${p} pike`;
-  } else {
-    btn.classList.add("gabim");
-    // Shfaq te saktën
-    const sakteOrig = pyetjet[idx].s;
-    document.querySelectorAll(".ops").forEach(b => {
-      if (b.textContent.trim().slice(1) === pyetjet[idx].o[sakteOrig])
-        b.classList.add("sakte");
-    });
-    seria=0;
-    fb.style.color   = "#ef4444";
-    fb.textContent   = "❌ Gabim!";
-  }
+      async function fundiQuizit() {
+        clearInterval(kronoID);
+        document.getElementById("zona-quiz").style.display = "none";
+        document.getElementById("hud").style.display = "none";
+        document.getElementById("prog-sh").style.display = "none";
+        document.getElementById("ekr-rez").style.display = "block";
 
-  document.getElementById("pike-v").textContent  = pike;
-  document.getElementById("seria-v").textContent = seria>0 ? seria+"🔥" : "—";
-  idx++;
-  setTimeout(shfaqPyetjen, 1500);
-}
+        const perq = Math.round((saktat / pyetjet.length) * 100);
+        const kohaMes = Math.round(kohaTotal / pyetjet.length);
 
-function kohaKaloi() {
-  seria=0; kohaTotal+=20; idx++;
-  const fb = document.getElementById("feedback");
-  fb.style.color   = "#f59e0b";
-  fb.textContent   = "⏰ Koha mbaroi!";
-  document.querySelectorAll(".ops").forEach(b=>b.disabled=true);
-  setTimeout(shfaqPyetjen, 1300);
-}
+        let ikona, titull;
+        if (perq >= 90) {
+          ikona = "🏆";
+          titull = "Legjendë! Mjeshtër i Python!";
+        } else if (perq >= 70) {
+          ikona = "🎉";
+          titull = "Shumë mirë! Vazhdo kështu!";
+        } else if (perq >= 50) {
+          ikona = "👍";
+          titull = "Mirë! Pak studim dhe do shkëlqesh!";
+        } else {
+          ikona = "📚";
+          titull = "Duhet studim! Shiko temat sërish.";
+        }
 
-async function fundiQuizit() {
-  clearInterval(kronoID);
-  document.getElementById("zona-quiz").style.display = "none";
-  document.getElementById("hud").style.display       = "none";
-  document.getElementById("prog-sh").style.display   = "none";
-  document.getElementById("ekr-rez").style.display   = "block";
+        document.getElementById("ikona-r").textContent = ikona;
+        document.getElementById("titull-r").textContent = titull;
+        document.getElementById("r-pike").textContent = pike + " pike";
+        document.getElementById("r-sakta").textContent =
+          `${saktat}/${pyetjet.length} (${perq}%)`;
+        document.getElementById("r-seria").textContent = seriaMax + "🔥";
+        document.getElementById("r-koha").textContent = kohaMes + "s/pyetje";
 
-  const perq = Math.round(saktat/pyetjet.length*100);
-  const kohaMes = Math.round(kohaTotal/pyetjet.length);
+        // Ruaj ne server
+        try {
+          await fetch("http://localhost:8000/ruaj-quiz", {
+            method: "POST",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              pike,
+              saktat,
+              total: pyetjet.length,
+              koha: kohaTotal,
+            }),
+          });
+        } catch (e) {}
+      }
 
-  let ikona, titull;
-  if (perq>=90)      { ikona="🏆"; titull="Legjendë! Mjeshtër i Python!"; }
-  else if (perq>=70) { ikona="🎉"; titull="Shumë mirë! Vazhdo kështu!"; }
-  else if (perq>=50) { ikona="👍"; titull="Mirë! Pak studim dhe do shkëlqesh!"; }
-  else               { ikona="📚"; titull="Duhet studim! Shiko temat sërish."; }
-
-  document.getElementById("ikona-r").textContent  = ikona;
-  document.getElementById("titull-r").textContent = titull;
-  document.getElementById("r-pike").textContent   = pike+" pike";
-  document.getElementById("r-sakta").textContent  = `${saktat}/${pyetjet.length} (${perq}%)`;
-  document.getElementById("r-seria").textContent  = seriaMax+"🔥";
-  document.getElementById("r-koha").textContent   = kohaMes+"s/pyetje";
-
-  // Ruaj ne server
-  try {
-    await fetch("http://localhost:8000/ruaj-quiz", {
-      method:"POST", credentials:"include",
-      headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({pike, saktat, total:pyetjet.length, koha:kohaTotal})
-    });
-  } catch(e){}
-}
-
-// Historiku kur hapet faqja
-async function ngarko_historikun() {
-  try {
-    const r = await fetch("http://localhost:8000/quiz-historiku", {credentials:"include"});
-    const d = await r.json();
-    if (d.historiku && d.historiku.length>0) {
-      document.getElementById("hist-zone").style.display = "block";
-      document.getElementById("hist-tbody").innerHTML = d.historiku.map(h=>`
+      // Historiku kur hapet faqja
+      async function ngarko_historikun() {
+        try {
+          const r = await fetch("http://localhost:8000/quiz-historiku", {
+            credentials: "include",
+          });
+          const d = await r.json();
+          if (d.historiku && d.historiku.length > 0) {
+            document.getElementById("hist-zone").style.display = "block";
+            document.getElementById("hist-tbody").innerHTML = d.historiku
+              .map(
+                (h) => `
         <tr>
           <td>${h.data.split(" ")[0]}</td>
           <td style="color:#38bdf8;">${h.pike}</td>
-          <td>${Math.round(h.saktat/h.total*100)}%</td>
+          <td>${Math.round((h.saktat / h.total) * 100)}%</td>
           <td>${h.koha}s</td>
-        </tr>`).join("");
-    }
-  } catch(e){}
-}
+        </tr>`,
+              )
+              .join("");
+          }
+        } catch (e) {}
+      }
 
-ngarko_historikun();
-</script>
-</body>
+      ngarko_historikun();
+    </script>
+  </body>
 </html>

@@ -2,12 +2,22 @@
 <html lang="sq">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Tema 13 - Skedaret ne Python</title>
     <link rel="stylesheet" href="tema1.css" />
   </head>
   <body>
+    <div class="topbar">
+      <div class="topbar-logo">Python Academy</div>
+      <div class="menu">
+        <a href="home.html">Kreu</a>
+        <a href="home.html#temat">Temat</a>
+        <a href="quiz.html">Quiz</a>
+        <a href="snake.html">Loja</a>
+        <a href="rreth-nesh.html">Rreth Nesh</a>
+      </div>
+    </div>
     <div class="container">
       <div class="header">
         <img
@@ -18,7 +28,10 @@
         <h1>Tema 13: Skedaret ne Python</h1>
       </div>
 
-      <p>Skedari eshte nje njesi ruajtese ku te dhenat ruhen ne menyre te perhershme ne PC. Ne python , skedaret perdoren per te lexuar, shkruajtur dhe ruajtur informacionin.
+      <p>
+        Skedari eshte nje njesi ruajtese ku te dhenat ruhen ne menyre te
+        perhershme ne PC. Ne python , skedaret perdoren per te lexuar,
+        shkruajtur dhe ruajtur informacionin.
       </p>
 
       <p>Funksioni Kryesor : open() , i cili ka 2 parametra.</p>
@@ -27,29 +40,34 @@
 
       <p>Jane 4 menyra kryesore per hapjen e skedarit:</p>
       <ul>
-        <li>Per lexim : "r" <br>
-        Nese skedari nuk ekziston, eshte gabim</li>
-        <li>Per shtim : "a" <br>
-        Nese skedari nuk ekziston, ai krijohet</li>
-        <li>Per shkrim : "w" <br>
-        Hap nje skedar per te shkruajtur. nese nuk ekziston, ai krijohet.</li>
+        <li>
+          Per lexim : "r" <br />
+          Nese skedari nuk ekziston, eshte gabim
+        </li>
+        <li>
+          Per shtim : "a" <br />
+          Nese skedari nuk ekziston, ai krijohet
+        </li>
+        <li>
+          Per shkrim : "w" <br />
+          Hap nje skedar per te shkruajtur. nese nuk ekziston, ai krijohet.
+        </li>
         <li>Per te krijuar skedar : "x"</li>
       </ul>
 
       <p>Shembull:</p>
 
       <div class="code">
-skedari = open("shenim.txt", "x") <br>
-skedari.close() <br><br>
+        skedari = open("shenim.txt", "x") <br />
+        skedari.close() <br /><br />
 
-skedari = open("shenim.txt", "w") <br>
+        skedari = open("shenim.txt", "w") <br />
 
-skedari.write("Pershendetje!\n") <br>
-skedari.write("Ky eshte nje shembull me skedaret ne Python.")
-<br><br>
-skedari.close()
-</div>
-
+        skedari.write("Pershendetje!\n") <br />
+        skedari.write("Ky eshte nje shembull me skedaret ne Python.")
+        <br /><br />
+        skedari.close()
+      </div>
 
       <div class="navigation">
         <a href="home.html" class="nav-btn">Faqja Kryesore</a>

@@ -2,12 +2,22 @@
 <html lang="sq">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Tema 17 - Enkapsulimi</title>
     <link rel="stylesheet" href="tema1.css" />
   </head>
   <body>
+    <div class="topbar">
+      <div class="topbar-logo">Python Academy</div>
+      <div class="menu">
+        <a href="home.html">Kreu</a>
+        <a href="home.html#temat">Temat</a>
+        <a href="quiz.html">Quiz</a>
+        <a href="snake.html">Loja</a>
+        <a href="rreth-nesh.html">Rreth Nesh</a>
+      </div>
+    </div>
     <div class="container">
       <div class="header">
         <img
@@ -29,26 +39,30 @@
         mos-aksesimin e metodave te nje klase nga jashte klases.
       </p>
 
-      <p>
-        Shembull:
-      </p>
+      <p>Shembull:</p>
 
       <div class="code">
-        class Personi: <br>
-     &nbsp;&nbsp;&nbsp;&nbsp;def __init__(self, emri, mosha): <br>
-         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.emri = emri <br>
-       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.__mosha = mosha   # atribut privat <br><br>
+        class Personi: <br />
+        &nbsp;&nbsp;&nbsp;&nbsp;def __init__(self, emri, mosha): <br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.emri = emri <br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.__mosha = mosha #
+        atribut privat <br /><br />
 
-    &nbsp;&nbsp;&nbsp;&nbsp;def shfaq_moshen(self): <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print("Mosha eshte:", self.__mosha) <br><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;def shfaq_moshen(self): <br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print("Mosha eshte:",
+        self.__mosha) <br /><br />
 
+        p1 = Personi("Andi", 16) <br /><br />
 
-p1 = Personi("Andi", 16) <br><br>
-
-print(p1.emri) <br>
-p1.shfaq_moshen()
+        print(p1.emri) <br />
+        p1.shfaq_moshen()
       </div>
-      <p>Ne Python, kur vendosim __ para emrit te atributit ose metodes, ai behet privat dhe nuk mund te perdoret direkt jashte klases. Per shembull self.__mosha eshte atribut privat dhe aksesohet vetem permes metodave te klases si shfaq_moshen().</p>
+      <p>
+        Ne Python, kur vendosim __ para emrit te atributit ose metodes, ai behet
+        privat dhe nuk mund te perdoret direkt jashte klases. Per shembull
+        self.__mosha eshte atribut privat dhe aksesohet vetem permes metodave te
+        klases si shfaq_moshen().
+      </p>
 
       <div class="navigation">
         <a href="home.html" class="nav-btn">Faqja Kryesore</a>
