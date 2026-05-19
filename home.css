@@ -26,6 +26,8 @@ body {
   font-size: 28px;
   font-weight: bold;
   color: #38bdf8;
+  display: inline-block;
+  letter-spacing: 2px;
 }
 
 .menu {
@@ -33,19 +35,36 @@ body {
   gap: 25px;
   flex-wrap: wrap;
 }
+.menu select {
+  background: #0a0f1e;
+  color: #94a3b8;
+  border: none;
+  border-bottom: 2px solid #38bdf8;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+  padding-bottom: 3px;
+  letter-spacing: 1px;
+  width: 80px;
+}
 
+.menu select:hover {
+  border-bottom: 2px solid #E7BF3F;
+}
 .menu a {
   text-decoration: none;
   color: #94a3b8;
   font-size: 16px;
   font-weight: bold;
-  border-bottom: 2px solid transparent;
+  letter-spacing: 1px;
+  border-bottom: 2px solid #38bdf8;
   padding-bottom: 3px;
 }
 
 .menu a:hover {
-  color: #38bdf8;
-  border-bottom: 2px solid #38bdf8;
+  border-bottom: 2px solid #E7BF3F;
 }
 
 .hero {
@@ -68,12 +87,15 @@ body {
   font-size: 52px;
   margin-bottom: 20px;
   color: #f1f5f9;
+  letter-spacing: 1px;
+  line-height: 1.15;
 }
 
 .hero-text p {
   font-size: 18px;
   margin-bottom: 35px;
   color: #94a3b8;
+  line-height: 1.7;
 }
 
 .btn {
@@ -85,6 +107,7 @@ body {
   font-weight: bold;
   font-family: 'Courier New', Courier, monospace;
   font-size: 15px;
+  letter-spacing: 1px;
   margin-right: 12px;
   display: inline-block;
   margin-bottom: 12px;
@@ -101,6 +124,7 @@ body {
 
 .hero-image img {
   width: 240px;
+  opacity: 0.9;
 }
 
 .temat {
@@ -108,11 +132,15 @@ body {
 }
 
 .temat h2 {
+  background-color: white;
   font-size: 36px;
   margin-bottom: 40px;
-  color: #f1f5f9;
+  color: #0F172A;
+  letter-spacing: 1px;
   border-left: 4px solid #38bdf8;
   padding-left: 18px;
+  display: inline-block;
+  border-bottom-right-radius: 15px;
 }
 
 .cards {
@@ -120,6 +148,8 @@ body {
 }
 
 .card {
+  vertical-align: middle;
+  height: 130px;
   width: 220px;
   background: #111827;
   padding: 28px 20px;
@@ -131,6 +161,7 @@ body {
   margin: 10px;
   border: 1px solid #1e3a5f;
   font-family: 'Courier New', Courier, monospace;
+  line-height: 1.6;
 }
 
 .card:hover {
@@ -157,7 +188,7 @@ body {
   }
 
   .hero {
-    padding: 60px 20px;
+    padding: 50px 20px;
     flex-direction: column;
     text-align: center;
   }
@@ -179,7 +210,7 @@ body {
   }
 
   .hero-image img {
-    width: 160px;
+    width: 150px;
   }
 
   .temat {
@@ -187,28 +218,35 @@ body {
   }
 
   .temat h2 {
-    font-size: 26px;
+    font-size: 24px;
+    margin-right: 0;
+    display: block;
+    width: 100%;
   }
 
   .card {
-    width: calc(50% - 20px);
+    width: calc(50% - 22px);
+    height: auto;
     font-size: 14px;
-    padding: 20px 12px;
+    padding: 18px 12px;
   }
 }
 
 @media (max-width: 480px) {
+  .logo {
+    font-size: 22px;
+  }
+
   .hero-text h1 {
-    font-size: 26px;
+    font-size: 24px;
   }
 
   .btn {
-    padding: 12px 20px;
-    font-size: 14px;
-    margin-right: 6px;
+    padding: 12px 18px;
+    font-size: 13px;
   }
 
   .card {
-    width: calc(100% - 20px);
+    width: calc(100% - 22px);
   }
 }

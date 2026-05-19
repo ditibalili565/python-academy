@@ -1,62 +1,79 @@
-<!-- <!DOCTYPE html>
+<!doctype html>
 <html lang="sq">
-<head>
-  <meta charset="UTF-8">
-  <title>Snake - Python Academy</title>
-  <link rel="stylesheet" href="tema1.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<div class="container">
+    <title>Snake - Python Academy</title>
+    <link rel="stylesheet" href="tema1.css" />
+  </head>
+  <body>
+    <div class="topbar">
+      <div class="topbar-logo">Python Academy</div>
+      <div class="menu">
+        <a href="home.html">Kreu</a>
+        <a href="home.html#temat">Temat</a>
+        <a href="quiz.html">Quiz</a>
+        <a href="snake.html">Loja</a>
+        <a href="rreth-nesh.html">Rreth Nesh</a>
+      </div>
+    </div>
 
-  <div class="header">
-    <img class="logo"
-      src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg"
-      alt="Python Logo">
-    <h1>🐍 Snake — Loja ne Python</h1>
-  </div>
+    <div class="container">
+      <div class="header">
+        <img
+          class="logo"
+          src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg"
+          alt="Python Logo"
+        />
+        <h1>🐍 Snake — Loja ne Python</h1>
+      </div>
 
-  <p>
-    Loja <strong>Snake</strong> eshte shkruar ne Python duke perdorur
-    bibloteken <strong>Pygame</strong>. Me poshte eshte i gjithe kodi burim
-    i skedarit <code style="color:#38bdf8;">snake.py</code>.
-    Shtyp butonin <strong>▶ Run snake.py</strong> per te hapur lojen!
-  </p>
+      <p>
+        Loja <strong>Snake</strong> eshte shkruar ne Python duke perdorur
+        bibloteken <strong>Pygame</strong>. Me poshte eshte i gjithe kodi burim
+        i skedarit <code style="color: #38bdf8">snake.py</code>.
+      </p>
 
-  <h2>Kontrollet e lojes</h2>
-  <ul style="color:#94a3b8; margin-bottom:30px;">
-    <li>⬆ ⬇ ⬅ ➡ — Leviz gjarperin</li>
-    <li>R — Rifillo lojen pas mbarimit</li>
-    <li>Q — Dil nga loja</li>
-  </ul>
+      <h2>Kontrollet e lojes</h2>
+      <ul style="color: #94a3b8; margin-bottom: 30px">
+        <li>⬆ ⬇ ⬅ ➡ — Leviz gjarperin</li>
+        <li>R — Rifillo lojen pas mbarimit</li>
+        <li>Q — Dil nga loja</li>
+      </ul>
 
-  <h2>📄 Kodi burim — snake.py</h2>
+      <h2>📄 Kodi burim — snake.py</h2>
 
-  <div class="code" id="kodi-burim" style="
-    white-space: pre;
-    overflow-x: auto;
-    font-size: 14px;
-    line-height: 1.75;
-    max-height: 600px;
-    overflow-y: auto;
-  "></div>
+      <div
+        class="code"
+        id="kodi-burim"
+        style="
+          white-space: pre;
+          overflow-x: auto;
+          font-size: 14px;
+          line-height: 1.75;
+          max-height: 600px;
+          overflow-y: auto;
+        "
+      ></div>
 
-  <div style="text-align:center; margin-bottom: 20px;">
-    <a href="#" class="btn" id="btn-run" onclick="ekzekuto(); return false;">
-      ▶ Run snake.py
-    </a>
-  </div>
+      <div style="text-align: center; margin-bottom: 16px; margin-top: 30px">
+        <a href="snake.exe" download class="btn">⬇ Shkarko snake.exe</a>
+      </div>
 
-  <div class="code" id="statusi" style="display:none; font-size:16px; white-space:pre-wrap;"></div>
+      <div class="code" style="font-size: 15px; margin-bottom: 20px">
+        # Hapat: # 1. Kliko "Shkarko snake.exe" # 2. Shko tek Downloads ne
+        kompjuterin tend # 3. Klikoje dy here snake.exe — loja hapet direkt! #
+        (nuk duhet Python i instaluar)
+      </div>
 
-  <div class="navigation">
-    <a href="home.html" class="nav-btn">Faqja Kryesore</a>
-  </div>
+      <div class="navigation">
+        <a href="home.html" class="nav-btn">Faqja Kryesore</a>
+      </div>
+    </div>
 
-</div>
-
-<script>
-const kodiPython = `import pygame
+    <script>
+      const kodiPython = `import pygame
 import random
 import sys
 
@@ -197,333 +214,107 @@ if __name__ == "__main__":
     loja_kryesore()
     pygame.quit()`;
 
-// ── Ngjyros sintaksen ────────────────────────────────────────────────────
-function ngjyros(kod) {
-  return kod.split('\n').map((rreshti, idx) => {
-    let r = rreshti
-      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      function ngjyros(kod) {
+        return kod
+          .split("\n")
+          .map((rreshti, idx) => {
+            let r = rreshti
+              .replace(/&/g, "&amp;")
+              .replace(/</g, "&lt;")
+              .replace(/>/g, "&gt;");
+            r = r.replace(
+              /(#.*)$/,
+              '<span style="color:#475569;font-style:italic;">$1</span>',
+            );
+            r = r.replace(
+              /(f?"[^"]*"|f?'[^']*')/g,
+              '<span style="color:#86efac;">$1</span>',
+            );
+            [
+              "import",
+              "from",
+              "def",
+              "return",
+              "if",
+              "elif",
+              "else",
+              "while",
+              "for",
+              "in",
+              "and",
+              "or",
+              "not",
+              "True",
+              "False",
+              "None",
+              "break",
+              "continue",
+              "class",
+              "pass",
+              "with",
+              "as",
+              "try",
+              "except",
+            ].forEach((k) => {
+              r = r.replace(
+                new RegExp(`\\b(${k})\\b`, "g"),
+                `<span style="color:#38bdf8;font-weight:bold;">$1</span>`,
+              );
+            });
+            r = r.replace(
+              /\b(\d+)\b/g,
+              '<span style="color:#fb923c;">$1</span>',
+            );
+            [
+              "print",
+              "range",
+              "len",
+              "enumerate",
+              "randrange",
+              "int",
+              "str",
+              "float",
+              "list",
+              "dict",
+              "set",
+              "tuple",
+            ].forEach((fn) => {
+              r = r.replace(
+                new RegExp(`\\b(${fn})\\b`, "g"),
+                `<span style="color:#a78bfa;">$1</span>`,
+              );
+            });
+            const nr = `<span style="color:#334155;display:inline-block;width:32px;text-align:right;margin-right:16px;user-select:none;">${idx + 1}</span>`;
+            return nr + r;
+          })
+          .join("\n");
+      }
 
-    r = r.replace(/(#.*)$/,
-      '<span style="color:#475569;font-style:italic;">$1</span>');
-    r = r.replace(/(f?"[^"]*"|f?'[^']*')/g,
-      '<span style="color:#86efac;">$1</span>');
-    ['import','from','def','return','if','elif','else','while','for',
-     'in','and','or','not','True','False','None','break','continue',
-     'class','pass','with','as','try','except'].forEach(k => {
-       r = r.replace(new RegExp(`\\b(${k})\\b`,'g'),
-         `<span style="color:#38bdf8;font-weight:bold;">$1</span>`);
-    });
-    r = r.replace(/\b(\d+)\b/g,
-      '<span style="color:#fb923c;">$1</span>');
-    ['print','range','len','enumerate','randrange','int','str',
-     'float','list','dict','set','tuple'].forEach(fn => {
-       r = r.replace(new RegExp(`\\b(${fn})\\b`,'g'),
-         `<span style="color:#a78bfa;">$1</span>`);
-    });
-    const nr = `<span style="color:#334155;display:inline-block;width:32px;text-align:right;margin-right:16px;user-select:none;">${idx+1}</span>`;
-    return nr + r;
-  }).join('\n');
-}
+      document.getElementById("kodi-burim").innerHTML = ngjyros(kodiPython);
 
-document.getElementById('kodi-burim').innerHTML = ngjyros(kodiPython);
+      async function ekzekuto() {
+        const btn = document.getElementById("btn-run");
+        const statusi = document.getElementById("statusi");
+        statusi.style.display = "block";
+        btn.textContent = "⏳ Duke nisur...";
+        statusi.textContent = "# Duke ekzekutuar snake.py...";
 
-// ── Buton Run ────────────────────────────────────────────────────────────
-async function ekzekuto() {
-  const btn     = document.getElementById('btn-run');
-  const statusi = document.getElementById('statusi');
-  statusi.style.display = 'block';
-  btn.textContent = '⏳ Duke nisur...';
-  statusi.textContent = '# Duke ekzekutuar snake.py...';
-
-  try {
-    const res  = await fetch('http://localhost:8000/run-snake', { method: 'POST' });
-    const data = await res.json();
-    if (data.ok) {
-      statusi.textContent = '✅ snake.py u nis me sukses!\n# Dritarja Pygame duhet te hapet tani.';
-    } else {
-      statusi.textContent = '❌ Gabim: ' + data.error;
-    }
-  } catch (e) {
-    statusi.textContent =
-      '❌ Serveri nuk u gjet! Ndiq hapat:\n\n' +
-      '  1.  pip install flask\n' +
-      '  2.  python server.py\n' +
-      '  3.  Hap: http://localhost:5000/snake.html';
-  }
-  btn.textContent = '▶ Run snake.py';
-}
-</script>
-
-</body>
-</html>
-
- -->
-
-
-
-
- <!DOCTYPE html>
-<html lang="sq">
-<head>
-  <meta charset="UTF-8">
-  <title>Snake - Python Academy</title>
-  <link rel="stylesheet" href="tema1.css">
-</head>
-<body>
-  <div class="topbar">
-  <div class="topbar-logo">Python Academy</div>
-  <div class="menu">
-    <a href="home.html">Kreu</a>
-    <a href="home.html#temat">Temat</a>
-    <a href="quiz.html">Quiz</a>
-    <a href="snake.html">Loja</a>
-    <a href="rreth-nesh.html">Rreth Nesh</a>
-  </div>
-</div>
-
-<div class="container">
-
-  <div class="header">
-    <img class="logo"
-      src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg"
-      alt="Python Logo">
-    <h1>🐍 Snake — Loja ne Python</h1>
-  </div>
-
-  <p>
-    Loja <strong>Snake</strong> eshte shkruar ne Python duke perdorur
-    bibloteken <strong>Pygame</strong>. Me poshte eshte i gjithe kodi burim
-    i skedarit <code style="color:#38bdf8;">snake.py</code>.
-  </p>
-
-  <h2>Kontrollet e lojes</h2>
-  <ul style="color:#94a3b8; margin-bottom:30px;">
-    <li>⬆ ⬇ ⬅ ➡ — Leviz gjarperin</li>
-    <li>R — Rifillo lojen pas mbarimit</li>
-    <li>Q — Dil nga loja</li>
-  </ul>
-
-  <h2>📄 Kodi burim — snake.py</h2>
-
-  <div class="code" id="kodi-burim" style="
-    white-space: pre;
-    overflow-x: auto;
-    font-size: 14px;
-    line-height: 1.75;
-    max-height: 600px;
-    overflow-y: auto;
-  "></div>
-
-  <div style="text-align:center; margin-bottom:16px; margin-top:30px;">
-    <a href="snake.exe" download class="btn">⬇ Shkarko snake.exe</a>
-  </div>
-
-  <div class="code" style="font-size:15px; margin-bottom:20px;">
-    # Hapat:
-    # 1. Kliko "Shkarko snake.exe"
-    # 2. Shko tek Downloads ne kompjuterin tend
-    # 3. Klikoje dy here snake.exe — loja hapet direkt!
-    # (nuk duhet Python i instaluar)
-  </div>
-
-  <div class="navigation">
-    <a href="home.html" class="nav-btn">Faqja Kryesore</a>
-  </div>
-
-</div>
-
-<script>
-const kodiPython = `import pygame
-import random
-import sys
-
-# --- Konfigurimi ---
-GJERESIA = 600
-LARTESIA = 600
-MADHESIA_BLLOKUT = 20
-FPS = 10
-
-BARDHE  = (255, 255, 255)
-ZI      = (0,   0,   0  )
-GJELBER = (0,   200, 0  )
-KUQE    = (200, 0,   0  )
-HIRI    = (40,  40,  40 )
-KALTER  = (56,  189, 248)
-
-# --- Inicializimi ---
-pygame.init()
-ekrani = pygame.display.set_mode((GJERESIA, LARTESIA))
-pygame.display.set_caption("Snake - Python Academy")
-orari = pygame.time.Clock()
-fonti = pygame.font.SysFont("Courier New", 28, bold=True)
-fonti_i_madh = pygame.font.SysFont("Courier New", 48, bold=True)
-
-
-def gjenero_ushqim(gjarperi):
-    """Gjeneron ushqim ne pozicion te rastesishem, jo mbi gjarperin."""
-    while True:
-        x = random.randrange(0, GJERESIA, MADHESIA_BLLOKUT)
-        y = random.randrange(0, LARTESIA, MADHESIA_BLLOKUT)
-        if (x, y) not in gjarperi:
-            return (x, y)
-
-
-def vizato_gjarper(ekrani, gjarperi):
-    """Vizaton cdo bllok te gjarprit."""
-    for i, (x, y) in enumerate(gjarperi):
-        ngjyra = KALTER if i == 0 else GJELBER
-        pygame.draw.rect(ekrani, ngjyra,
-            (x, y, MADHESIA_BLLOKUT - 2, MADHESIA_BLLOKUT - 2),
-            border_radius=4)
-
-
-def vizato_ushqim(ekrani, ushqimi):
-    """Vizaton ushqimin (mollen)."""
-    pygame.draw.rect(ekrani, KUQE,
-        (ushqimi[0], ushqimi[1],
-         MADHESIA_BLLOKUT - 2, MADHESIA_BLLOKUT - 2),
-        border_radius=6)
-
-
-def shfaq_score(ekrani, score):
-    """Shfaq piket ne krye."""
-    teksti = fonti.render(f"Pike: {score}", True, BARDHE)
-    ekrani.blit(teksti, (10, 10))
-
-
-def ekran_fund(ekrani, score):
-    """Shfaq mesazhin e fundit te lojes."""
-    ekrani.fill(ZI)
-    msg1 = fonti_i_madh.render("LOJA MBAROI!", True, KUQE)
-    msg2 = fonti.render(f"Pike: {score}", True, BARDHE)
-    msg3 = fonti.render("Shtyp R per te rifilluar", True, HIRI)
-    msg4 = fonti.render("Shtyp Q per te dale", True, HIRI)
-    ekrani.blit(msg1, (GJERESIA//2 - msg1.get_width()//2, 180))
-    ekrani.blit(msg2, (GJERESIA//2 - msg2.get_width()//2, 260))
-    ekrani.blit(msg3, (GJERESIA//2 - msg3.get_width()//2, 320))
-    ekrani.blit(msg4, (GJERESIA//2 - msg4.get_width()//2, 360))
-    pygame.display.flip()
-
-
-def loja_kryesore():
-    """Funksioni kryesor i lojes."""
-    gjarperi = [(300, 300), (280, 300), (260, 300)]
-    drejtimi = (MADHESIA_BLLOKUT, 0)
-    ushqimi  = gjenero_ushqim(gjarperi)
-    score    = 0
-
-    while True:
-        for ngjarje in pygame.event.get():
-            if ngjarje.type == pygame.QUIT:
-                pygame.quit(); sys.exit()
-
-            if ngjarje.type == pygame.KEYDOWN:
-                if ngjarje.key == pygame.K_UP and drejtimi != (0, MADHESIA_BLLOKUT):
-                    drejtimi = (0, -MADHESIA_BLLOKUT)
-                elif ngjarje.key == pygame.K_DOWN and drejtimi != (0, -MADHESIA_BLLOKUT):
-                    drejtimi = (0,  MADHESIA_BLLOKUT)
-                elif ngjarje.key == pygame.K_LEFT and drejtimi != (MADHESIA_BLLOKUT, 0):
-                    drejtimi = (-MADHESIA_BLLOKUT, 0)
-                elif ngjarje.key == pygame.K_RIGHT and drejtimi != (-MADHESIA_BLLOKUT, 0):
-                    drejtimi = ( MADHESIA_BLLOKUT, 0)
-
-        koka_re = (gjarperi[0][0] + drejtimi[0],
-                   gjarperi[0][1] + drejtimi[1])
-
-        if (koka_re[0] < 0 or koka_re[0] >= GJERESIA or
-                koka_re[1] < 0 or koka_re[1] >= LARTESIA or
-                koka_re in gjarperi):
-            ekran_fund(ekrani, score)
-            duke_pritur = True
-            while duke_pritur:
-                for ngjarje in pygame.event.get():
-                    if ngjarje.type == pygame.QUIT:
-                        pygame.quit(); sys.exit()
-                    if ngjarje.type == pygame.KEYDOWN:
-                        if ngjarje.key == pygame.K_r:
-                            loja_kryesore(); return
-                        if ngjarje.key == pygame.K_q:
-                            pygame.quit(); sys.exit()
-            return
-
-        gjarperi.insert(0, koka_re)
-
-        if koka_re == ushqimi:
-            score  += 10
-            ushqimi = gjenero_ushqim(gjarperi)
-        else:
-            gjarperi.pop()
-
-        ekrani.fill(HIRI)
-
-        for x in range(0, GJERESIA, MADHESIA_BLLOKUT):
-            pygame.draw.line(ekrani, (50, 50, 50), (x, 0), (x, LARTESIA))
-        for y in range(0, LARTESIA, MADHESIA_BLLOKUT):
-            pygame.draw.line(ekrani, (50, 50, 50), (0, y), (GJERESIA, y))
-
-        vizato_gjarper(ekrani, gjarperi)
-        vizato_ushqim(ekrani, ushqimi)
-        shfaq_score(ekrani, score)
-
-        pygame.display.flip()
-        orari.tick(FPS)
-
-
-# --- Pika hyrese ---
-if __name__ == "__main__":
-    loja_kryesore()
-    pygame.quit()`;
-
-function ngjyros(kod) {
-  return kod.split('\n').map((rreshti, idx) => {
-    let r = rreshti
-      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    r = r.replace(/(#.*)$/,
-      '<span style="color:#475569;font-style:italic;">$1</span>');
-    r = r.replace(/(f?"[^"]*"|f?'[^']*')/g,
-      '<span style="color:#86efac;">$1</span>');
-    ['import','from','def','return','if','elif','else','while','for',
-     'in','and','or','not','True','False','None','break','continue',
-     'class','pass','with','as','try','except'].forEach(k => {
-       r = r.replace(new RegExp(`\\b(${k})\\b`,'g'),
-         `<span style="color:#38bdf8;font-weight:bold;">$1</span>`);
-    });
-    r = r.replace(/\b(\d+)\b/g,
-      '<span style="color:#fb923c;">$1</span>');
-    ['print','range','len','enumerate','randrange','int','str',
-     'float','list','dict','set','tuple'].forEach(fn => {
-       r = r.replace(new RegExp(`\\b(${fn})\\b`,'g'),
-         `<span style="color:#a78bfa;">$1</span>`);
-    });
-    const nr = `<span style="color:#334155;display:inline-block;width:32px;text-align:right;margin-right:16px;user-select:none;">${idx+1}</span>`;
-    return nr + r;
-  }).join('\n');
-}
-
-document.getElementById('kodi-burim').innerHTML = ngjyros(kodiPython);
-
-async function ekzekuto() {
-  const btn     = document.getElementById('btn-run');
-  const statusi = document.getElementById('statusi');
-  statusi.style.display = 'block';
-  btn.textContent = '⏳ Duke nisur...';
-  statusi.textContent = '# Duke ekzekutuar snake.py...';
-
-  try {
-    const res  = await fetch('http://localhost:8000/run-snake', { method: 'POST' });
-    const data = await res.json();
-    if (data.ok) {
-      statusi.textContent = '✅ Loja u hap!';
-    } else {
-      statusi.textContent = '❌ Gabim: ' + (data.gabim || data.error);
-    }
-  } catch (e) {
-    statusi.textContent =
-      '❌ Serveri nuk u gjet!\n  Ekzekuto: python server.py';
-  }
-  btn.textContent = '▶ Run snake.py';
-}
-</script>
-
-</body>
+        try {
+          const res = await fetch("http://localhost:8000/run-snake", {
+            method: "POST",
+          });
+          const data = await res.json();
+          if (data.ok) {
+            statusi.textContent = "✅ Loja u hap!";
+          } else {
+            statusi.textContent = "❌ Gabim: " + (data.gabim || data.error);
+          }
+        } catch (e) {
+          statusi.textContent =
+            "❌ Serveri nuk u gjet!\n  Ekzekuto: python server.py";
+        }
+        btn.textContent = "▶ Run snake.py";
+      }
+    </script>
+  </body>
 </html>
