@@ -5,7 +5,6 @@ body {
   color: white;
 }
 
-/* ── TOPBAR ─────────────────────────────────────────── */
 .topbar {
   width: 100%;
   padding: 20px 60px;
@@ -63,7 +62,6 @@ body {
   border-bottom: 2px solid #E7BF3F;
 }
 
-/* ── CONTAINER ──────────────────────────────────────── */
 .container {
   width: 70%;
   margin: auto;
@@ -164,7 +162,6 @@ ul {
   border: 1px solid #38bdf8;
 }
 
-/* ── RESPONSIVE ─────────────────────────────────────── */
 @media (max-width: 768px) {
   .topbar {
     padding: 16px 20px;
@@ -218,7 +215,7 @@ ul {
 
   .navigation {
     margin-top: 40px;
-    padding: 16px;
+    padding: 10px;
   }
 
   .nav-btn {
