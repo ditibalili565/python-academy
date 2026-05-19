@@ -2,6 +2,8 @@
 <html lang="sq">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Tema 18 - Polimorfizmi dhe Trashegimia</title>
     <link rel="stylesheet" href="tema1.css" />
   </head>
@@ -57,20 +59,21 @@
 
       <p>Shembull:</p>
       <div class="code">
-        class TeDhenat: <br>
-    &nbsp;&nbsp;&nbsp;&nbsp;def __init__(self, emri, mosha): <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.emri = emri <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.mosha = mosha <br><br>
+        class TeDhenat: <br />
+        &nbsp;&nbsp;&nbsp;&nbsp;def __init__(self, emri, mosha): <br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.emri = emri <br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.mosha = mosha
+        <br /><br />
 
-    &nbsp;&nbsp;&nbsp;&nbsp;def te_dhenat(self): <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(self.emri, self.mosha) <br><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;def te_dhenat(self): <br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(self.emri,
+        self.mosha) <br /><br />
 
+        class Personi(TeDhenat): <br />
+        &nbsp;&nbsp;&nbsp;&nbsp;pass <br /><br />
+        p1 = Personi("Gezim", 15) <br />
 
-class Personi(TeDhenat): <br>
-    &nbsp;&nbsp;&nbsp;&nbsp;pass <br><br>
-p1 = Personi("Gezim", 15) <br>
-
-p1.te_dhenat()
+        p1.te_dhenat()
       </div>
 
       <div class="navigation">
