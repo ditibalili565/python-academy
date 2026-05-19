@@ -775,7 +775,8 @@
           const origI = rend[i];
           const btn = document.createElement("button");
           btn.className = "ops";
-          btn.innerHTML = `<span class="ops-shkr">${sh}</span>${q.o[origI]}`;
+          btn.innerHTML = `<span class="ops-shkr">${sh}</span>`;
+          btn.append(document.createTextNode(q.o[origI]));
           btn.onclick = () => zgjidh(btn, origI === q.s);
           grid.appendChild(btn);
         });
