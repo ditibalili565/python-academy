@@ -7,7 +7,7 @@ GJERESIA = 600
 LARTESIA = 600
 MADHESIA_BLLOKUT = 20
 FPS = 7
-MOLLA_MAX = 5
+MOLLA_MAX = 1
 
 BARDHE  = (255, 255, 255)
 ZI      = (0,   0,   0  )
@@ -91,13 +91,13 @@ def loja_kryesore():
                 sys.exit()
 
             if ngjarje.type == pygame.KEYDOWN:
-                if ngjarje.key == pygame.K_UP and drejtimi != (0, MADHESIA_BLLOKUT):
+                if (ngjarje.key == pygame.K_UP or ngjarje.key == pygame.K_w) and drejtimi != (0, MADHESIA_BLLOKUT):
                     drejtimi = (0, -MADHESIA_BLLOKUT)
-                elif ngjarje.key == pygame.K_DOWN and drejtimi != (0, -MADHESIA_BLLOKUT):
+                elif (ngjarje.key == pygame.K_DOWN or ngjarje.key == pygame.K_s) and drejtimi != (0, -MADHESIA_BLLOKUT):
                     drejtimi = (0, MADHESIA_BLLOKUT)
-                elif ngjarje.key == pygame.K_LEFT and drejtimi != (MADHESIA_BLLOKUT, 0):
+                elif (ngjarje.key == pygame.K_LEFT or ngjarje.key == pygame.K_a) and drejtimi != (MADHESIA_BLLOKUT, 0):
                     drejtimi = (-MADHESIA_BLLOKUT, 0)
-                elif ngjarje.key == pygame.K_RIGHT and drejtimi != (-MADHESIA_BLLOKUT, 0):
+                elif (ngjarje.key == pygame.K_RIGHT or ngjarje.key == pygame.K_d) and drejtimi != (-MADHESIA_BLLOKUT, 0):
                     drejtimi = (MADHESIA_BLLOKUT, 0)
 
         # --- Levizja ---
