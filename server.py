@@ -86,8 +86,6 @@ def kontrollo_login(emri, fjalkalimi):
     except Exception as e:
         return {"ok": False, "gabim": str(e)}
 
-
-# ── Handler kryesor ───────────────────────────────────────────────────────
 class Handler(http.server.SimpleHTTPRequestHandler):
 
     def __init__(self, *args, **kwargs):
