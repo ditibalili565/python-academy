@@ -155,15 +155,22 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self._dergoje(resp)
 
         elif self.path == "/run-snake":
+            # ── NDRYSHIMI: merr emrin dhe kalo si argument ──
+            emri       = data.get("emri", "").strip()
             snake_path = os.path.join(FOLDER, "snake.py")
             if not os.path.exists(snake_path):
                 self._dergoje({"ok": False, "gabim": "snake.py nuk u gjet!"})
             else:
                 try:
-                    subprocess.Popen([sys.executable, snake_path])
+                    args = [sys.executable, snake_path]
+                    if emri:
+                        args.append(emri)
+                    subprocess.Popen(args)
                     self._dergoje({"ok": True})
                 except Exception as e:
                     self._dergoje({"ok": False, "gabim": str(e)})
+            # ────────────────────────────────────────────────
+
         else:
             self.send_response(404)
             self.end_headers()

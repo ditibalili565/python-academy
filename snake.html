@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Snake - Python Academy</title>
     <link rel="stylesheet" href="tema1.css" />
   </head>
@@ -30,7 +31,9 @@
           <option value="tema15.html">Tema 15 - Hyrje ne OOP</option>
           <option value="tema16.html">Tema 16 - Klasat dhe objektet</option>
           <option value="tema17.html">Tema 17 - Enkapsulimi</option>
-          <option value="tema18.html">Tema 18 - Polimorfizmi dhe Trashegimia</option>
+          <option value="tema18.html">
+            Tema 18 - Polimorfizmi dhe Trashegimia
+          </option>
         </select>
         <a href="quiz.html">Quiz</a>
         <a href="snake.html">Loja</a>
@@ -86,55 +89,7 @@
         (nuk duhet Python i instaluar)
       </div>
 
-      <!-- ───── TABELA E PIKËVE ───── -->
-      <div id="seksioni-piket" style="display:none; margin-top: 40px;">
-        <hr style="border: none; border-top: 1px solid #1e293b; margin-bottom: 30px;" />
-
-        <div style="
-          background: #0f172a;
-          border: 1px solid #1e3a4a;
-          border-radius: 12px;
-          overflow: hidden;
-          max-width: 380px;
-        ">
-          <div style="
-            background: #1e293b;
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border-bottom: 1px solid #1e3a4a;
-          ">
-            <span style="font-size: 16px;">🎮</span>
-            <span id="emri-lojtari" style="
-              color: #38bdf8;
-              font-size: 15px;
-              font-weight: bold;
-              font-family: 'Courier New', monospace;
-            "></span>
-          </div>
-
-          <table style="width: 100%; border-collapse: collapse; font-family: 'Courier New', monospace;">
-            <tr style="border-bottom: 1px solid #1e3a4a;">
-              <td style="padding: 14px 20px; color: #64748b; font-size: 14px;">Loja e fundit</td>
-              <td style="padding: 14px 20px; text-align: right;">
-                <span id="pike-fundit" style="color: #e2e8f0; font-size: 20px; font-weight: bold;">—</span>
-                <span style="color: #475569; font-size: 12px; margin-left: 4px;">pike</span>
-              </td>
-            </tr>
-            <tr>
-              <td style="padding: 14px 20px; color: #64748b; font-size: 14px;">Rekordi</td>
-              <td style="padding: 14px 20px; text-align: right;">
-                <span id="pike-rekordi" style="color: #38bdf8; font-size: 20px; font-weight: bold;">—</span>
-                <span style="color: #475569; font-size: 12px; margin-left: 4px;">pike</span>
-              </td>
-            </tr>
-          </table>
-        </div>
-      </div>
-      <!-- ───────────────────────── -->
-
-      <div class="navigation" style="margin-top: 30px;">
+      <div class="navigation">
         <a href="home.html" class="nav-btn">Faqja Kryesore</a>
       </div>
     </div>
@@ -298,9 +253,30 @@ if __name__ == "__main__":
               '<span style="color:#86efac;">$1</span>',
             );
             [
-              "import","from","def","return","if","elif","else","while","for",
-              "in","and","or","not","True","False","None","break","continue",
-              "class","pass","with","as","try","except",
+              "import",
+              "from",
+              "def",
+              "return",
+              "if",
+              "elif",
+              "else",
+              "while",
+              "for",
+              "in",
+              "and",
+              "or",
+              "not",
+              "True",
+              "False",
+              "None",
+              "break",
+              "continue",
+              "class",
+              "pass",
+              "with",
+              "as",
+              "try",
+              "except",
             ].forEach((k) => {
               r = r.replace(
                 new RegExp(`\\b(${k})\\b`, "g"),
@@ -312,8 +288,18 @@ if __name__ == "__main__":
               '<span style="color:#fb923c;">$1</span>',
             );
             [
-              "print","range","len","enumerate","randrange","int","str",
-              "float","list","dict","set","tuple",
+              "print",
+              "range",
+              "len",
+              "enumerate",
+              "randrange",
+              "int",
+              "str",
+              "float",
+              "list",
+              "dict",
+              "set",
+              "tuple",
             ].forEach((fn) => {
               r = r.replace(
                 new RegExp(`\\b(${fn})\\b`, "g"),
@@ -328,40 +314,29 @@ if __name__ == "__main__":
 
       document.getElementById("kodi-burim").innerHTML = ngjyros(kodiPython);
 
-      // ───── LOGJIKA E PIKËVE ─────
-
-      async function ngarko_piket() {
-        const emri = localStorage.getItem("pa_emri");
-        if (!emri) return; // nuk është loguar
+      async function ekzekuto() {
+        const btn = document.getElementById("btn-run");
+        const statusi = document.getElementById("statusi");
+        statusi.style.display = "block";
+        btn.textContent = "⏳ Duke nisur...";
+        statusi.textContent = "# Duke ekzekutuar snake.py...";
 
         try {
-          const res = await fetch(
-            "http://localhost:8000/merr-piket?emri=" + encodeURIComponent(emri)
-          );
+          const res = await fetch("http://localhost:8000/run-snake", {
+            method: "POST",
+          });
           const data = await res.json();
-          if (!data.ok) return;
-
-          document.getElementById("seksioni-piket").style.display = "block";
-          document.getElementById("emri-lojtari").textContent = emri;
-          document.getElementById("pike-rekordi").textContent = data.rekordi;
-
-          if (data.lojrat && data.lojrat.length > 0) {
-            document.getElementById("pike-fundit").textContent = data.lojrat[0].pike;
+          if (data.ok) {
+            statusi.textContent = "✅ Loja u hap!";
           } else {
-            document.getElementById("pike-fundit").textContent = "0";
+            statusi.textContent = "❌ Gabim: " + (data.gabim || data.error);
           }
         } catch (e) {
-          // serveri jo aktiv, fshih tabelën
+          statusi.textContent =
+            "❌ Serveri nuk u gjet!\n  Ekzekuto: python server.py";
         }
+        btn.textContent = "▶ Run snake.py";
       }
-
-      // Ngarko kur hapet faqja
-      ngarko_piket();
-
-      // Rifresho kur kthehesh nga loja (window merr fokus)
-      window.addEventListener("focus", ngarko_piket);
-
-      // ───────────────────────────
     </script>
   </body>
 </html>
