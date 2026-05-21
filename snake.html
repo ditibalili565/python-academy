@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>Snake - Python Academy</title>
     <link rel="stylesheet" href="tema1.css" />
   </head>
@@ -31,9 +30,7 @@
           <option value="tema15.html">Tema 15 - Hyrje ne OOP</option>
           <option value="tema16.html">Tema 16 - Klasat dhe objektet</option>
           <option value="tema17.html">Tema 17 - Enkapsulimi</option>
-          <option value="tema18.html">
-            Tema 18 - Polimorfizmi dhe Trashegimia
-          </option>
+          <option value="tema18.html">Tema 18 - Polimorfizmi dhe Trashegimia</option>
         </select>
         <a href="quiz.html">Quiz</a>
         <a href="snake.html">Loja</a>
@@ -88,148 +85,62 @@
         kompjuterin tend # 3. Klikoje dy here snake.exe — loja hapet direkt! #
         (nuk duhet Python i instaluar)
       </div>
-    </div>
-    <hr
-      style="border: none; border-top: 0.5px solid #334155; margin: 40px 0 30px"
-    />
 
-    <h2 style="color: #e2e8f0; font-size: 20px; margin-bottom: 16px">
-      🏆 Pikët e mia
-    </h2>
+      <!-- ───── TABELA E PIKËVE ───── -->
+      <div id="seksioni-piket" style="display:none; margin-top: 40px;">
+        <hr style="border: none; border-top: 1px solid #1e293b; margin-bottom: 30px;" />
 
-    <!-- Forma e loginit -->
-    <div id="seksioni-login" style="margin-bottom: 24px">
-      <input
-        id="inp-emri"
-        type="text"
-        placeholder="Emri i perdoruesit"
-        style="
-          padding: 8px 12px;
-          border-radius: 6px;
-          border: 1px solid #334155;
-          background: #1e293b;
-          color: #e2e8f0;
-          margin-right: 8px;
-          font-size: 14px;
-        "
-      />
-      <button
-        onclick="ngarko_piket()"
-        style="
-          padding: 8px 16px;
-          background: #0ea5e9;
-          color: white;
-          border: none;
-          border-radius: 6px;
-          cursor: pointer;
-          font-size: 14px;
-        "
-      >
-        Shiko Pikët
-      </button>
-      <span
-        id="msg-login"
-        style="margin-left: 12px; color: #94a3b8; font-size: 13px"
-      ></span>
-    </div>
+        <div style="
+          background: #0f172a;
+          border: 1px solid #1e3a4a;
+          border-radius: 12px;
+          overflow: hidden;
+          max-width: 400px;
+        ">
+          <!-- Koka e tabelës: emri i lojtarit -->
+          <div style="
+            background: #1e293b;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #1e3a4a;
+          ">
+            <span style="font-size: 18px;">🎮</span>
+            <span id="emri-lojtari" style="
+              color: #38bdf8;
+              font-size: 16px;
+              font-weight: bold;
+              font-family: 'Courier New', monospace;
+            "></span>
+          </div>
 
-    <!-- Kartat e statistikave -->
-    <div style="display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap">
-      <div
-        style="
-          background: #1e293b;
-          border-radius: 8px;
-          padding: 16px 24px;
-          min-width: 140px;
-        "
-      >
-        <p style="color: #64748b; font-size: 13px; margin: 0 0 4px">Rekordi</p>
-        <p
-          id="stat-rekordi"
-          style="color: #38bdf8; font-size: 28px; font-weight: bold; margin: 0"
-        >
-          —
-        </p>
+          <!-- Rreshtat e tabelës -->
+          <table style="width: 100%; border-collapse: collapse; font-family: 'Courier New', monospace;">
+            <tr style="border-bottom: 1px solid #1e3a4a;">
+              <td style="padding: 14px 20px; color: #64748b; font-size: 14px;">Loja e fundit</td>
+              <td style="padding: 14px 20px; text-align: right;">
+                <span id="pike-fundit" style="color: #e2e8f0; font-size: 20px; font-weight: bold;">—</span>
+                <span style="color: #475569; font-size: 12px; margin-left: 4px;">pike</span>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 14px 20px; color: #64748b; font-size: 14px;">Rekordi</td>
+              <td style="padding: 14px 20px; text-align: right;">
+                <span id="pike-rekordi" style="color: #38bdf8; font-size: 20px; font-weight: bold;">—</span>
+                <span style="color: #475569; font-size: 12px; margin-left: 4px;">pike</span>
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
-      <div
-        style="
-          background: #1e293b;
-          border-radius: 8px;
-          padding: 16px 24px;
-          min-width: 140px;
-        "
-      >
-        <p style="color: #64748b; font-size: 13px; margin: 0 0 4px">
-          Lojërat e fundit
-        </p>
-        <p
-          id="stat-count"
-          style="color: #e2e8f0; font-size: 28px; font-weight: bold; margin: 0"
-        >
-          —
-        </p>
+      <!-- ───────────────────────── -->
+
+      <div class="navigation" style="margin-top: 30px;">
+        <a href="home.html" class="nav-btn">Faqja Kryesore</a>
       </div>
     </div>
 
-    <!-- Tabela e lojrave -->
-    <div
-      style="
-        background: #1e293b;
-        border-radius: 10px;
-        overflow: hidden;
-        margin-bottom: 30px;
-      "
-    >
-      <table style="width: 100%; border-collapse: collapse; font-size: 14px">
-        <thead>
-          <tr style="border-bottom: 1px solid #334155">
-            <th
-              style="
-                text-align: left;
-                padding: 12px 16px;
-                color: #64748b;
-                font-weight: 500;
-              "
-            >
-              #
-            </th>
-            <th
-              style="
-                text-align: left;
-                padding: 12px 16px;
-                color: #64748b;
-                font-weight: 500;
-              "
-            >
-              Pike
-            </th>
-            <th
-              style="
-                text-align: left;
-                padding: 12px 16px;
-                color: #64748b;
-                font-weight: 500;
-              "
-            >
-              Data
-            </th>
-          </tr>
-        </thead>
-        <tbody id="tbody-piket">
-          <tr>
-            <td
-              colspan="3"
-              style="padding: 20px 16px; color: #475569; text-align: center"
-            >
-              Shkruaj emrin dhe kliko "Shiko Pikët"
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="navigation">
-      <a href="home.html" class="nav-btn">Faqja Kryesore</a>
-    </div>
     <script>
       const kodiPython = `import pygame
 import random
@@ -389,30 +300,9 @@ if __name__ == "__main__":
               '<span style="color:#86efac;">$1</span>',
             );
             [
-              "import",
-              "from",
-              "def",
-              "return",
-              "if",
-              "elif",
-              "else",
-              "while",
-              "for",
-              "in",
-              "and",
-              "or",
-              "not",
-              "True",
-              "False",
-              "None",
-              "break",
-              "continue",
-              "class",
-              "pass",
-              "with",
-              "as",
-              "try",
-              "except",
+              "import","from","def","return","if","elif","else","while","for",
+              "in","and","or","not","True","False","None","break","continue",
+              "class","pass","with","as","try","except",
             ].forEach((k) => {
               r = r.replace(
                 new RegExp(`\\b(${k})\\b`, "g"),
@@ -424,18 +314,8 @@ if __name__ == "__main__":
               '<span style="color:#fb923c;">$1</span>',
             );
             [
-              "print",
-              "range",
-              "len",
-              "enumerate",
-              "randrange",
-              "int",
-              "str",
-              "float",
-              "list",
-              "dict",
-              "set",
-              "tuple",
+              "print","range","len","enumerate","randrange","int","str",
+              "float","list","dict","set","tuple",
             ].forEach((fn) => {
               r = r.replace(
                 new RegExp(`\\b(${fn})\\b`, "g"),
@@ -449,6 +329,51 @@ if __name__ == "__main__":
       }
 
       document.getElementById("kodi-burim").innerHTML = ngjyros(kodiPython);
+
+      // ───── LOGJIKA E PIKËVE ─────
+
+      // Kur hapet faqja, kontrollo nëse ka user të loguar
+      window.addEventListener("load", function () {
+        const emri = localStorage.getItem("pa_emri");
+        if (emri) {
+          ngarko_piket(emri);
+        }
+      });
+
+      // Edhe kur faqja merr fokus (p.sh. pas mbylljes së lojës)
+      window.addEventListener("focus", function () {
+        const emri = localStorage.getItem("pa_emri");
+        if (emri) {
+          ngarko_piket(emri);
+        }
+      });
+
+      async function ngarko_piket(emri) {
+        try {
+          const res = await fetch(
+            "http://localhost:8000/merr-piket?emri=" + encodeURIComponent(emri)
+          );
+          const data = await res.json();
+          if (!data.ok) return;
+
+          // Shfaq seksionin
+          document.getElementById("seksioni-piket").style.display = "block";
+          document.getElementById("emri-lojtari").textContent = emri;
+
+          // Rekordi
+          document.getElementById("pike-rekordi").textContent = data.rekordi;
+
+          // Loja e fundit (e para në listë, pasi server kthen ORDER BY data DESC)
+          if (data.lojrat && data.lojrat.length > 0) {
+            document.getElementById("pike-fundit").textContent = data.lojrat[0].pike;
+          } else {
+            document.getElementById("pike-fundit").textContent = "—";
+          }
+        } catch (e) {
+          // Serveri nuk është aktiv, fshih tabelën
+          document.getElementById("seksioni-piket").style.display = "none";
+        }
+      }
 
       async function ekzekuto() {
         const btn = document.getElementById("btn-run");
@@ -472,54 +397,6 @@ if __name__ == "__main__":
             "❌ Serveri nuk u gjet!\n  Ekzekuto: python server.py";
         }
         btn.textContent = "▶ Run snake.py";
-      }
-
-      async function ngarko_piket() {
-        const emri = document.getElementById("inp-emri").value.trim();
-        const msg = document.getElementById("msg-login");
-        if (!emri) {
-          msg.textContent = "Shkruaj emrin!";
-          return;
-        }
-        msg.textContent = "Duke ngarkuar...";
-
-        try {
-          const res = await fetch(
-            `http://localhost:8000/merr-piket?emri=${encodeURIComponent(emri)}`,
-          );
-          const data = await res.json();
-          if (!data.ok) {
-            msg.textContent = "❌ " + data.gabim;
-            return;
-          }
-
-          msg.textContent = "";
-          document.getElementById("stat-rekordi").textContent = data.rekordi;
-          document.getElementById("stat-count").textContent =
-            data.lojrat.length;
-
-          const tbody = document.getElementById("tbody-piket");
-          if (data.lojrat.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="3" style="padding:20px 16px; color:#475569; text-align:center;">Nuk ka lojëra të regjistruara ende.</td></tr>`;
-            return;
-          }
-          tbody.innerHTML = data.lojrat
-            .map((l, i) => {
-              const data_fmt = new Date(l.data).toLocaleString("sq-AL");
-              const eshte_rekord = l.pike === data.rekordi;
-              return `<tr style="border-top:1px solid #1e3a4a;">
-        <td style="padding:10px 16px; color:#475569;">${i + 1}</td>
-        <td style="padding:10px 16px; color:${eshte_rekord ? "#38bdf8" : "#e2e8f0"}; font-weight:${eshte_rekord ? "bold" : "normal"};">
-          ${l.pike} ${eshte_rekord ? "🏆" : ""}
-        </td>
-        <td style="padding:10px 16px; color:#64748b; font-size:13px;">${data_fmt}</td>
-      </tr>`;
-            })
-            .join("");
-        } catch (e) {
-          document.getElementById("msg-login").textContent =
-            "❌ Serveri nuk u gjet!";
-        }
       }
     </script>
   </body>
