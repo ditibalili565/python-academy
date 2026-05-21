@@ -88,12 +88,148 @@
         kompjuterin tend # 3. Klikoje dy here snake.exe — loja hapet direkt! #
         (nuk duhet Python i instaluar)
       </div>
+    </div>
+    <hr
+      style="border: none; border-top: 0.5px solid #334155; margin: 40px 0 30px"
+    />
 
-      <div class="navigation">
-        <a href="home.html" class="nav-btn">Faqja Kryesore</a>
+    <h2 style="color: #e2e8f0; font-size: 20px; margin-bottom: 16px">
+      🏆 Pikët e mia
+    </h2>
+
+    <!-- Forma e loginit -->
+    <div id="seksioni-login" style="margin-bottom: 24px">
+      <input
+        id="inp-emri"
+        type="text"
+        placeholder="Emri i perdoruesit"
+        style="
+          padding: 8px 12px;
+          border-radius: 6px;
+          border: 1px solid #334155;
+          background: #1e293b;
+          color: #e2e8f0;
+          margin-right: 8px;
+          font-size: 14px;
+        "
+      />
+      <button
+        onclick="ngarko_piket()"
+        style="
+          padding: 8px 16px;
+          background: #0ea5e9;
+          color: white;
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+          font-size: 14px;
+        "
+      >
+        Shiko Pikët
+      </button>
+      <span
+        id="msg-login"
+        style="margin-left: 12px; color: #94a3b8; font-size: 13px"
+      ></span>
+    </div>
+
+    <!-- Kartat e statistikave -->
+    <div style="display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap">
+      <div
+        style="
+          background: #1e293b;
+          border-radius: 8px;
+          padding: 16px 24px;
+          min-width: 140px;
+        "
+      >
+        <p style="color: #64748b; font-size: 13px; margin: 0 0 4px">Rekordi</p>
+        <p
+          id="stat-rekordi"
+          style="color: #38bdf8; font-size: 28px; font-weight: bold; margin: 0"
+        >
+          —
+        </p>
+      </div>
+      <div
+        style="
+          background: #1e293b;
+          border-radius: 8px;
+          padding: 16px 24px;
+          min-width: 140px;
+        "
+      >
+        <p style="color: #64748b; font-size: 13px; margin: 0 0 4px">
+          Lojërat e fundit
+        </p>
+        <p
+          id="stat-count"
+          style="color: #e2e8f0; font-size: 28px; font-weight: bold; margin: 0"
+        >
+          —
+        </p>
       </div>
     </div>
 
+    <!-- Tabela e lojrave -->
+    <div
+      style="
+        background: #1e293b;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 30px;
+      "
+    >
+      <table style="width: 100%; border-collapse: collapse; font-size: 14px">
+        <thead>
+          <tr style="border-bottom: 1px solid #334155">
+            <th
+              style="
+                text-align: left;
+                padding: 12px 16px;
+                color: #64748b;
+                font-weight: 500;
+              "
+            >
+              #
+            </th>
+            <th
+              style="
+                text-align: left;
+                padding: 12px 16px;
+                color: #64748b;
+                font-weight: 500;
+              "
+            >
+              Pike
+            </th>
+            <th
+              style="
+                text-align: left;
+                padding: 12px 16px;
+                color: #64748b;
+                font-weight: 500;
+              "
+            >
+              Data
+            </th>
+          </tr>
+        </thead>
+        <tbody id="tbody-piket">
+          <tr>
+            <td
+              colspan="3"
+              style="padding: 20px 16px; color: #475569; text-align: center"
+            >
+              Shkruaj emrin dhe kliko "Shiko Pikët"
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="navigation">
+      <a href="home.html" class="nav-btn">Faqja Kryesore</a>
+    </div>
     <script>
       const kodiPython = `import pygame
 import random
@@ -336,6 +472,54 @@ if __name__ == "__main__":
             "❌ Serveri nuk u gjet!\n  Ekzekuto: python server.py";
         }
         btn.textContent = "▶ Run snake.py";
+      }
+
+      async function ngarko_piket() {
+        const emri = document.getElementById("inp-emri").value.trim();
+        const msg = document.getElementById("msg-login");
+        if (!emri) {
+          msg.textContent = "Shkruaj emrin!";
+          return;
+        }
+        msg.textContent = "Duke ngarkuar...";
+
+        try {
+          const res = await fetch(
+            `http://localhost:8000/merr-piket?emri=${encodeURIComponent(emri)}`,
+          );
+          const data = await res.json();
+          if (!data.ok) {
+            msg.textContent = "❌ " + data.gabim;
+            return;
+          }
+
+          msg.textContent = "";
+          document.getElementById("stat-rekordi").textContent = data.rekordi;
+          document.getElementById("stat-count").textContent =
+            data.lojrat.length;
+
+          const tbody = document.getElementById("tbody-piket");
+          if (data.lojrat.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="3" style="padding:20px 16px; color:#475569; text-align:center;">Nuk ka lojëra të regjistruara ende.</td></tr>`;
+            return;
+          }
+          tbody.innerHTML = data.lojrat
+            .map((l, i) => {
+              const data_fmt = new Date(l.data).toLocaleString("sq-AL");
+              const eshte_rekord = l.pike === data.rekordi;
+              return `<tr style="border-top:1px solid #1e3a4a;">
+        <td style="padding:10px 16px; color:#475569;">${i + 1}</td>
+        <td style="padding:10px 16px; color:${eshte_rekord ? "#38bdf8" : "#e2e8f0"}; font-weight:${eshte_rekord ? "bold" : "normal"};">
+          ${l.pike} ${eshte_rekord ? "🏆" : ""}
+        </td>
+        <td style="padding:10px 16px; color:#64748b; font-size:13px;">${data_fmt}</td>
+      </tr>`;
+            })
+            .join("");
+        } catch (e) {
+          document.getElementById("msg-login").textContent =
+            "❌ Serveri nuk u gjet!";
+        }
       }
     </script>
   </body>
