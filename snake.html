@@ -95,27 +95,25 @@
           border: 1px solid #1e3a4a;
           border-radius: 12px;
           overflow: hidden;
-          max-width: 400px;
+          max-width: 380px;
         ">
-          <!-- Koka e tabelës: emri i lojtarit -->
           <div style="
             background: #1e293b;
-            padding: 14px 20px;
+            padding: 12px 20px;
             display: flex;
             align-items: center;
             gap: 10px;
             border-bottom: 1px solid #1e3a4a;
           ">
-            <span style="font-size: 18px;">🎮</span>
+            <span style="font-size: 16px;">🎮</span>
             <span id="emri-lojtari" style="
               color: #38bdf8;
-              font-size: 16px;
+              font-size: 15px;
               font-weight: bold;
               font-family: 'Courier New', monospace;
             "></span>
           </div>
 
-          <!-- Rreshtat e tabelës -->
           <table style="width: 100%; border-collapse: collapse; font-family: 'Courier New', monospace;">
             <tr style="border-bottom: 1px solid #1e3a4a;">
               <td style="padding: 14px 20px; color: #64748b; font-size: 14px;">Loja e fundit</td>
@@ -332,23 +330,10 @@ if __name__ == "__main__":
 
       // ───── LOGJIKA E PIKËVE ─────
 
-      // Kur hapet faqja, kontrollo nëse ka user të loguar
-      window.addEventListener("load", function () {
+      async function ngarko_piket() {
         const emri = localStorage.getItem("pa_emri");
-        if (emri) {
-          ngarko_piket(emri);
-        }
-      });
+        if (!emri) return; // nuk është loguar
 
-      // Edhe kur faqja merr fokus (p.sh. pas mbylljes së lojës)
-      window.addEventListener("focus", function () {
-        const emri = localStorage.getItem("pa_emri");
-        if (emri) {
-          ngarko_piket(emri);
-        }
-      });
-
-      async function ngarko_piket(emri) {
         try {
           const res = await fetch(
             "http://localhost:8000/merr-piket?emri=" + encodeURIComponent(emri)
@@ -356,48 +341,27 @@ if __name__ == "__main__":
           const data = await res.json();
           if (!data.ok) return;
 
-          // Shfaq seksionin
           document.getElementById("seksioni-piket").style.display = "block";
           document.getElementById("emri-lojtari").textContent = emri;
-
-          // Rekordi
           document.getElementById("pike-rekordi").textContent = data.rekordi;
 
-          // Loja e fundit (e para në listë, pasi server kthen ORDER BY data DESC)
           if (data.lojrat && data.lojrat.length > 0) {
             document.getElementById("pike-fundit").textContent = data.lojrat[0].pike;
           } else {
-            document.getElementById("pike-fundit").textContent = "—";
+            document.getElementById("pike-fundit").textContent = "0";
           }
         } catch (e) {
-          // Serveri nuk është aktiv, fshih tabelën
-          document.getElementById("seksioni-piket").style.display = "none";
+          // serveri jo aktiv, fshih tabelën
         }
       }
 
-      async function ekzekuto() {
-        const btn = document.getElementById("btn-run");
-        const statusi = document.getElementById("statusi");
-        statusi.style.display = "block";
-        btn.textContent = "⏳ Duke nisur...";
-        statusi.textContent = "# Duke ekzekutuar snake.py...";
+      // Ngarko kur hapet faqja
+      ngarko_piket();
 
-        try {
-          const res = await fetch("http://localhost:8000/run-snake", {
-            method: "POST",
-          });
-          const data = await res.json();
-          if (data.ok) {
-            statusi.textContent = "✅ Loja u hap!";
-          } else {
-            statusi.textContent = "❌ Gabim: " + (data.gabim || data.error);
-          }
-        } catch (e) {
-          statusi.textContent =
-            "❌ Serveri nuk u gjet!\n  Ekzekuto: python server.py";
-        }
-        btn.textContent = "▶ Run snake.py";
-      }
+      // Rifresho kur kthehesh nga loja (window merr fokus)
+      window.addEventListener("focus", ngarko_piket);
+
+      // ───────────────────────────
     </script>
   </body>
 </html>
