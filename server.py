@@ -16,7 +16,7 @@ FOLDER = os.path.dirname(os.path.abspath(__file__))
 PORT   = int(os.environ.get("PORT", 8000))
 
 # ── VENDOS KETU CONNECTION STRING-UN TEND ────────────────────────────────
-CONNECTION_STRING = "postgresql://neondb_owner:npg_poHsSGg04Iqv@ep-solitary-wildflower-abgy5pem.eu-west-2.aws.neon.tech/neondb?sslmode=require"
+CONNECTION_STRING = "postgresql://neondb_owner:npg_FSGZt7wqCdR2@ep-still-sea-abcx70uu.eu-west-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
 # ─────────────────────────────────────────────────────────────────────────
 
 
