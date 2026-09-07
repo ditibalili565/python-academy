@@ -713,7 +713,7 @@
       async function fillo() {
         // Kontrollo login
         try {
-          const r = await fetch("http://localhost:8000/perdoruesi-aktual", {
+          const r = await fetch("/perdoruesi-aktual", {
             credentials: "include",
           });
           const d = await r.json();
@@ -889,7 +889,7 @@
 
         // Ruaj ne server
         try {
-          await fetch("http://localhost:8000/ruaj-quiz", {
+          await fetch("/ruaj-quiz", {
             method: "POST",
             credentials: "include",
             headers: { "Content-Type": "application/json" },
@@ -906,7 +906,7 @@
       // Historiku kur hapet faqja
       async function ngarko_historikun() {
         try {
-          const r = await fetch("http://localhost:8000/quiz-historiku", {
+          const r = await fetch("/quiz-historiku", {
             credentials: "include",
           });
           const d = await r.json();
